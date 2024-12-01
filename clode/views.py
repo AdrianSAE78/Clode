@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .serializer import UsersSerializer, UserPreferencesSerializer, GarmentsSerializer, GarmentTagsSerializer, ExchangeSerializer, ScoresSerializer
-from .models import Users, UserPreferences, Garments, GarmentTags, Exchange, Scores
+from .serializer import UsersSerializer, UserPreferencesSerializer, GarmentsSerializer, GarmentTagsSerializer, ExchangeSerializer
+from .models import Users, UserPreferences, Garments, GarmentTags, Exchange
 
 # Create your views here.
 class UsersView(viewsets.ModelViewSet):
