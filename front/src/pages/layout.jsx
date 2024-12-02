@@ -36,7 +36,7 @@ const items=[
     {
         icon:'/icons/add.png', 
         name:"new-article", 
-        route:'/new-garment'
+        route:'/create-garment'
     }
 ]
 
