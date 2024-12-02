@@ -5,12 +5,13 @@ import "../styles/pages/profile.css";
 
 import photo from "../assets/profile.jpg";
 import zapatos from "../assets/products/calzado.jpg";
+import Layout from "./layout";
 
 
 const Profile = () => {
   const navigate = useNavigate();
   return (
-    <div className="body-custom">
+    <Layout>
       <h1>Mi perfil</h1>
       {/* Card */}
       <div className="card">
@@ -76,7 +77,7 @@ const Profile = () => {
           </div>
         </div>
       </section>
-    </div>
+    </Layout>
   );
 };
 

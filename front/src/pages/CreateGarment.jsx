@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import MenuForm from "../components/menuForm";
 import "../styles/main.css";
 import "../styles/pages/new-garment.css";
+import Layout from "./layout";
 
 const CreateGarment = () => {
   const navigate = useNavigate();
@@ -79,7 +80,7 @@ const CreateGarment = () => {
   }, [image, name, talla, categorie, estado]);
 
   return (
-    <div className="body-custom">
+    <Layout>
       <h1>Nueva prenda</h1>
       <div>
         {!image && (
@@ -190,7 +191,7 @@ const CreateGarment = () => {
           Publicar
         </button>
       </div>
-    </div>
+    </Layout>
   );
 };
 

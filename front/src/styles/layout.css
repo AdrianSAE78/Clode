@@ -1,0 +1,45 @@
+/* Importa estilos base */
+@import "./base/reset.css";
+@import "./base/global.css";
+
+/* Importa variables y mixins */
+@import "./utils/variables.css";
+
+.body-custom {
+  background-color: var(--surface-container);
+  padding: 2rem 1rem;
+}
+
+.navbar {
+    border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3.25rem;
+  background-color: var(--primary);
+
+  ul {
+    list-style: none; /* Quita los estilos predeterminados de las viñetas */
+    margin: 0; /* Elimina el margen predeterminado */
+    padding: 0 2rem;
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  li {
+    margin: 0;
+    padding: 0;
+
+    .icon {
+      background-color: transparent;
+      border:none;
+      width: 3rem;
+      img {
+        width: 100%;
+      }
+    }
+  }
+}
