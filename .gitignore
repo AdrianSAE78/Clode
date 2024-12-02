@@ -26,7 +26,7 @@ Thumbs.db
 
 # Archivos estáticos generados
 staticfiles/
-media/
+#media/
 
 # Migraciones generadas (opcional, según el caso)
 migrations/*
