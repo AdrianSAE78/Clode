@@ -1,6 +1,12 @@
 
 # **Clode - Plataforma de Intercambio de Ropa Usada**
 
+**Video Explicativo:**
+https://puceeduec-my.sharepoint.com/:v:/g/personal/asacuna_puce_edu_ec/EZ3cWTxRAyhEt5BknyW_LQMBVeEuNX4Ry-4DOfmt7LhEiQ?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=07HtZb
+
+**Casos de Uso:**
+https://puceeduec-my.sharepoint.com/:w:/g/personal/asacuna_puce_edu_ec/EXzQPP9J0ylOpRpYgJETf-4BJEyMDEc8ihsFGojydRDeag?e=CeetNU
+
 **Clode** es una aplicación desarrollada para fomentar la sostenibilidad y reducir la contaminación ambiental mediante el intercambio de ropa usada. Esta plataforma conecta a personas interesadas en reutilizar prendas, creando un impacto positivo en el medio ambiente y promoviendo un modelo de economía circular.
 
 ---
@@ -88,7 +94,12 @@ El objetivo principal de Clode es ofrecer una solución sostenible que permita a
    python manage.py runserver
    ```
 8. Abre la aplicación en [http://localhost:8000](http://localhost:8000).
-
+9. Inicia el proyecto de react:  
+   ```bash
+   cd front/
+   npm i
+   npm run dev
+   ```
 ---
 
 ## Contribuciones
