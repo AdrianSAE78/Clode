@@ -73,15 +73,21 @@ El objetivo principal de Clode es ofrecer una solución sostenible que permita a
        }
    }
    ```
-5. Aplica las migraciones:  
+5. Generar Archivos de migracion:
+   
+   ```bash
+   python manage.py makemigrations
+   ```
+6. Migrar a base de datos:
+   
    ```bash
    python manage.py migrate
    ```
-6. Inicia el servidor:  
+7. Inicia el servidor:  
    ```bash
    python manage.py runserver
    ```
-7. Abre la aplicación en [http://localhost:8000](http://localhost:8000).
+8. Abre la aplicación en [http://localhost:8000](http://localhost:8000).
 
 ---
 
