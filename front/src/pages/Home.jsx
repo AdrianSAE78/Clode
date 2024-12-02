@@ -3,10 +3,11 @@ import CircleLabels from "../components/circleLabels";
 import Catalog from "../components/catalog";
 import "../styles/main.css";
 import zapatos from "../assets/products/calzado.jpg";
+import Layout from "./layout";
 
 const Home = () => {
   return (
-    <div className="body-custom">
+    <Layout>
       <div className="header">
         <h1 className="display-large">InterMod</h1>
         <div className="icon-bag">
@@ -89,7 +90,7 @@ const Home = () => {
           <Catalog />
         </div>
       </section>
-    </div>
+    </Layout>
   );
 };
 
