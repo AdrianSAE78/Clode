@@ -12,4 +12,4 @@ admin.site.register(GarmentTags)
 
 admin.site.register(Exchange)
 
-admin.site.register(Scores)
+# admin.site.register(Scores)
