@@ -1,25 +1,48 @@
 import { Box } from "@mui/material";
-import camisa from "../assets/products/camisa.jpg"    
-import calzado from '../assets/products/calzado.jpg'
+import camisa from "../assets/products/camisa.jpg";
+import calzado from "../assets/products/calzado.jpg";
 import ItemCatalog from "./itemCatalog";
+import { useEffect, useState } from "react";
 
 const Catalog = () => {
+  const [data, setData] = useState([]);
+
+  const getGarments = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8000/clode/api/v1/garments/"
+      );
+      const garments = await response.json();
+      const updatedData = matchCategoriesWithData(garments, categories);
+      setData(updatedData);
+    } catch (error) {
+      console.error("Error fetching garments:", error);
+    }
+  };
+
   const matchCategoriesWithData = (data, categories) => {
     return data.map((product) => {
       const matchedCategory = categories.find(
-        (category) => category.label === product.categorie.name
+        (category) => category.label === product.category
       );
-  
+
       return {
         ...product,
         categorie: {
-          ...product.categorie,
-          icon: matchedCategory ? matchedCategory.image : null, // Asigna el icono si se encuentra, o null si no
+          name: product.category,
+          icon: matchedCategory ? matchedCategory.image : null,
         },
+        img: product.garment_image,
+        name: product.title,
       };
     });
   };
-  const updatedData = matchCategoriesWithData(data, categories);
+
+  useEffect(() => {
+    getGarments();
+  }, []);
+
+  // const updatedData = matchCategoriesWithData(data, categories);
 
   return (
     <Box
@@ -39,30 +62,31 @@ const Catalog = () => {
         scrollbarWidth: "none",
       }}
     >
-      {updatedData.map((item) => {
-        return (
-          <ItemCatalog
-            key={item.id}
-            image={item.img}
-            icon ={item.categorie.icon}
-            categorieName={item.categorie.name}
-            itemDescription={item.name}
-          />
-        );
-      })}
+      {data.length === 0 ? (
+      <div>Loading...</div> // Puedes agregar un spinner o mensaje aquí
+    ) : (
+      data.map((item) => (
+        <ItemCatalog
+          key={item.id}
+          image={item.img}
+          icon={item.categorie.icon}
+          categorieName={item.categorie.name}
+          itemDescription={item.description}
+        />
+      ))
+    )}
     </Box>
   );
 };
 
 export default Catalog;
 
-
 const data = [
     {
         id:1,
         img:camisa,
         categorie:{
-            name:"Verano", 
+            name:"Verano",
             icon:'/categories/verano.jpg'
         },
         name:"Camisa de varios colores"
@@ -71,7 +95,7 @@ const data = [
         id:2,
         img:calzado,
         categorie:{
-            name:"Urbano", 
+            name:"Urbano",
             icon:'/categories/verano.jpg'
         },
         name:"Zapatos de color verde"
@@ -80,41 +104,40 @@ const data = [
       id:3,
       img:camisa,
       categorie:{
-          name:"Rock", 
+          name:"Rock",
           icon:'/categories/verano.jpg'
       },
       name:"Camisas hipster"
   }
 ]
 
-
 const categories = [
   {
-    label: "Mujer",
+    label: "Camisas",
     image: "/categories/women.jpg",
   },
   {
-    label: "Hombre",
+    label: "Pantalones",
     image: "/categories/hombre.jpg",
   },
   {
-    label: "Invierno",
+    label: "Chaquetas",
     image: "/categories/invierno.jpg",
   },
   {
-    label: "Verano",
+    label: "Calzado",
     image: "/categories/verano.jpg",
   },
   {
-    label: "Urbano",
+    label: "Blusas",
     image: "/categories/urbano.jpg",
   },
   {
-    label: "Rock",
+    label: "Faldas",
     image: "/categories/rock.jpg",
   },
   {
-    label: "Vintage",
+    label: "Accesorios",
     image: "/categories/vintage.jpg",
   },
   {

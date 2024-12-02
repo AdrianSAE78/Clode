@@ -5,7 +5,7 @@ from django.contrib.postgres.fields import ArrayField
 # Create your models here.
 
 class Users(AbstractUser):
-    profile_picture = models.ImageField(upload_to='media/profile_pictures/', null=True)
+    profile_picture = models.ImageField(upload_to='profile_pictures/', null=True)
     trust_score = models.FloatField(default=0, validators=[MinValueValidator(0), MaxValueValidator(5)])
     user_type = models.CharField(max_length=50, null=False, default='usuario')
     liter_counter = models.FloatField(default=0)
@@ -28,7 +28,7 @@ class UserPreferences(models.Model):
     user = models.OneToOneField(Users, on_delete=models.RESTRICT, related_name='user_preferences')
     prefered_free_hours = ArrayField(models.CharField(max_length=300, null=False, default=list))
     prefered_size = models.CharField(max_length=30, null=False)
-    prefered_size_shoes = models.DecimalField(max_digits=2, decimal_places=1, null=False)
+    prefered_size_shoes = models.DecimalField(max_digits=4, decimal_places=1, null=False)
     prefered_style = models.CharField(max_length=100, null=False)
 
     def __str__(self) -> str:
@@ -37,7 +37,7 @@ class UserPreferences(models.Model):
 class Garments(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='user_Garments')
     title = models.CharField(max_length=80, null=False)
-    garment_image = models.ImageField(upload_to='media/garment_images', null=False)
+    garment_image = models.ImageField(upload_to='garment_images', null=False)
     description = models.CharField(max_length=350, null=False)
     size = models.CharField(max_length=30, null=False)
     condition = models.CharField(max_length=100, null=False)
@@ -52,7 +52,7 @@ class Garments(models.Model):
 class GarmentTags(models.Model):
     garment = models.ForeignKey(Garments, on_delete=models.RESTRICT, related_name='tags')
     tag_name = models.CharField(max_length=100, null=False)
-    tag_picture = models.ImageField(upload_to='media/tag_picture/', null=True)
+    tag_picture = models.ImageField(upload_to='tag_picture/', null=True)
 
     def __str__(self) -> str:
         return self.tag_name
