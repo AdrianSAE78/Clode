@@ -102,8 +102,16 @@ Clode es un proyecto abierto a mejoras y colaboraciones. Si deseas contribuir, s
 
 ## Contacto
 Si tienes preguntas o sugerencias, contáctanos:
-**Adrian Acuña** - asacuna@puce.edu.ec
-**Edwin Cacuango** - efcacuango@puce.edu.ec  
-**Ariel Umatambo** - vaumatambo@puce.edu.ec 
-**Proyecto Clode** - [Repositorio en GitHub]https://github.com/AdrianSAE78/Clode.git
+
+# **Adrian Acuña**
+asacuna@puce.edu.ec
+# **Edwin Cacuango**
+efcacuango@puce.edu.ec  
+# **Ariel Umatambo**
+vaumatambo@puce.edu.ec 
+
+---
+
+# **Proyecto Clode**
+[Repositorio en GitHub]https://github.com/AdrianSAE78/Clode.git
 ``` 
