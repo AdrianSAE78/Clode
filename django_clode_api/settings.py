@@ -102,8 +102,8 @@ DATABASES = {
         'NAME': 'clodeDB',
         'HOST': 'localhost',
         'PORT': '5432',
-        'USER': 'ewin',
-        'PASSWORD': ''
+        'USER': 'postgres',
+        'PASSWORD': '12345'
     }
 }
 

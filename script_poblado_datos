@@ -1,0 +1,65 @@
+-- Insertar datos en la tabla "Users" con los campos obligatorios de AbstractUser
+INSERT INTO clode_users (username, password, email, trust_score, user_type, liter_counter, profile_picture, 
+    is_superuser, is_staff, is_active, first_name, last_name, date_joined)
+VALUES 
+('user1', 'hashed_password', 'user1@example.com', 4.5, 'usuario', 12.3, 'profile_pictures/user1.jpg', FALSE, FALSE, TRUE, 'User', 'One', CURRENT_TIMESTAMP),
+('user2', 'hashed_password', 'user2@example.com', 3.8, 'usuario', 8.7, 'profile_pictures/user2.jpg', FALSE, FALSE, TRUE, 'User', 'Two', CURRENT_TIMESTAMP),
+('user3', 'hashed_password', 'user3@example.com', 4.9, 'usuario', 15.0, 'profile_pictures/user3.jpg', FALSE, FALSE, TRUE, 'User', 'Three', CURRENT_TIMESTAMP),
+('user4', 'hashed_password', 'user4@example.com', 4.0, 'usuario', 10.0, 'profile_pictures/user4.jpg', FALSE, FALSE, TRUE, 'User', 'Four', CURRENT_TIMESTAMP),
+('user5', 'hashed_password', 'user5@example.com', 3.5, 'usuario', 5.3, 'profile_pictures/user5.jpg', FALSE, FALSE, TRUE, 'User', 'Five', CURRENT_TIMESTAMP),
+('user6', 'hashed_password', 'user6@example.com', 4.2, 'usuario', 9.1, 'profile_pictures/user6.jpg', FALSE, FALSE, TRUE, 'User', 'Six', CURRENT_TIMESTAMP),
+('user7', 'hashed_password', 'user7@example.com', 4.8, 'usuario', 11.2, 'profile_pictures/user7.jpg', FALSE, FALSE, TRUE, 'User', 'Seven', CURRENT_TIMESTAMP),
+('user8', 'hashed_password', 'user8@example.com', 3.9, 'usuario', 6.4, 'profile_pictures/user8.jpg', FALSE, FALSE, TRUE, 'User', 'Eight', CURRENT_TIMESTAMP),
+('user9', 'hashed_password', 'user9@example.com', 5.0, 'usuario', 16.7, 'profile_pictures/user9.jpg', FALSE, FALSE, TRUE, 'User', 'Nine', CURRENT_TIMESTAMP),
+('user10', 'hashed_password', 'user10@example.com', 4.3, 'usuario', 14.5, 'profile_pictures/user10.jpg', FALSE, FALSE, TRUE, 'User', 'Ten', CURRENT_TIMESTAMP);
+
+-- Insertar datos en la tabla "UserPreferences"
+INSERT INTO clode_userpreferences (user_id, prefered_free_hours, prefered_size, prefered_size_shoes, prefered_style)
+VALUES
+(1, '{"10:00-12:00", "14:00-16:00"}', 'M', 9.5, 'Casual'),
+(2, '{"09:00-11:00", "13:00-15:00"}', 'L', 10.0, 'Formal'),
+(3, '{"11:00-13:00", "15:00-17:00"}', 'S', 8.5, 'Sporty'),
+(4, '{"10:00-12:00", "16:00-18:00"}', 'M', 9.0, 'Vintage'),
+(5, '{"12:00-14:00", "18:00-20:00"}', 'XL', 10.5, 'Classic'),
+(6, '{"09:00-11:00", "17:00-19:00"}', 'M', 9.0, 'Casual'),
+(7, '{"08:00-10:00", "14:00-16:00"}', 'L', 8.5, 'Formal'),
+(8, '{"11:00-13:00", "19:00-21:00"}', 'S', 10.0, 'Boho'),
+(9, '{"13:00-15:00", "15:00-17:00"}', 'M', 9.5, 'Modern'),
+(10, '{"10:00-12:00", "14:00-16:00"}', 'L', 9.0, 'Sporty');
+
+-- Insertar datos en la tabla "Garments"
+INSERT INTO clode_garments (user_id, title, garment_image, description, size, condition, brand, category,upload_date, is_available)
+VALUES
+(1, 'Camisa Azul', 'garment_images/shirt1.jpg', 'Camisa formal azul', 'M', 'Nueva', 'Zara', 'Camisas', CURRENT_DATE, 1),
+(2, 'Pantalón Negro', 'garment_images/pants1.jpg', 'Pantalón de vestir negro', 'L', 'Usado', 'H&M', 'Pantalones', CURRENT_DATE, 1),
+(3, 'Chaqueta Roja', 'garment_images/jacket1.jpg', 'Chaqueta roja casual', 'XL', 'Nueva', 'Adidas', 'Chaquetas', CURRENT_DATE, 1),
+(4, 'Zapatos Deportivos', 'garment_images/shoes1.jpg', 'Zapatos deportivos cómodos', '42', 'Nueva', 'Nike', 'Calzado', CURRENT_DATE, 1),
+(5, 'Blusa Blanca', 'garment_images/blouse1.jpg', 'Blusa blanca elegante', 'S', 'Usado', 'Forever 21', 'Blusas', CURRENT_DATE, 1),
+(6, 'Falda Plisada', 'garment_images/skirt1.jpg', 'Falda plisada color beige', 'M', 'Nueva', 'Uniqlo', 'Faldas', CURRENT_DATE, 1),
+(7, 'Sombrero de Paja', 'garment_images/hat1.jpg', 'Sombrero de paja para el verano', 'Único', 'Nueva', 'Gucci', 'Accesorios', CURRENT_DATE, 1),
+(8, 'Bufanda Gris', 'garment_images/scarf1.jpg', 'Bufanda gris de lana', 'Único', 'Usado', 'Burberry', 'Accesorios', CURRENT_DATE, 1),
+(9, 'Camisa Verde', 'garment_images/shirt2.jpg', 'Camisa casual verde', 'L', 'Nueva', 'Levi\s', 'Camisas', CURRENT_DATE, 1),
+(10, 'Zapatos de Tacón', 'garment_images/heels1.jpg', 'Zapatos de tacón color negro', '38', 'Usado', 'Prada', 'Calzado', CURRENT_DATE, 1);
+
+-- Insertar datos en la tabla "GarmentTags"
+INSERT INTO clode_garmenttags (garment_id, tag_name, tag_picture)
+VALUES
+(1, 'Formal', 'tag_picture/formal.jpg'),
+(2, 'Casual', 'tag_picture/casual.jpg'),
+(3, 'Elegante', 'tag_picture/elegant.jpg'),
+(4, 'Deportivo', 'tag_picture/sporty.jpg'),
+(5, 'Clásico', 'tag_picture/classic.jpg'),
+(6, 'Accesorios', 'tag_picture/accessories.jpg'),
+(7, 'Verano', 'tag_picture/summer.jpg'),
+(8, 'Invierno', 'tag_picture/winter.jpg'),
+(9, 'Básico', 'tag_picture/basic.jpg'),
+(10, 'Moderno', 'tag_picture/modern.jpg');
+
+-- Insertar datos en la tabla "Exchange"
+INSERT INTO clode_exchange (garment_sender_id, garment_receiver_id, sender_user_id, receiver_user_id, status, suggested_location, match_date)
+VALUES
+(1, 2, 1, 2, 'En proceso', 'Patio Central PUCE', CURRENT_DATE),
+(3, 4, 3, 4, 'Agendado', 'Parque La Carolina', CURRENT_DATE),
+(5, 6, 5, 6, 'Entregado', 'Plaza Foch', CURRENT_DATE),
+(7, 8, 7, 8, 'Imposible entregar', 'Centro Histórico', CURRENT_DATE),
+(9, 10, 9, 10, 'Cancelado', 'Parque Metropolitano', CURRENT_DATE);
