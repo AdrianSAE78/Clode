@@ -10,7 +10,7 @@ const Catalog = () => {
   const getGarments = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8000/clode/api/v1/garments/"
+        "http://localhost:3000/api/garments/"
       );
       const garments = await response.json();
       const updatedData = matchCategoriesWithData(garments, categories);

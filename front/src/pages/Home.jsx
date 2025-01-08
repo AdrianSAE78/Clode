@@ -3,8 +3,13 @@ import CircleLabels from "../components/circleLabels";
 import Catalog from "../components/catalog";
 import "../styles/main.css";
 import zapatos from "../assets/products/calzado.jpg";
+import React, { useState, useEffect } from "react";
 
 const Home = () => {
+  const categories = CategoriesList();
+  if (!Array.isArray(categories)) {
+    return <div>Cargando categorías...</div>;
+  }
   return (
     <div className="body-custom">
       <div className="header">
@@ -75,9 +80,9 @@ const Home = () => {
           >
             {categories.map((item) => (
               <CircleLabels
-                key={item.label}
-                label={item.label}
-                imgSrc={item.image}
+                key={item.categorie_name}
+                label={item.categorie_name}
+                imgSrc={item.categorie_picture}
               />
             ))}
           </Box>
@@ -95,49 +100,93 @@ const Home = () => {
 
 export default Home;
 
-const categories = [
-  {
-    label: "Mujer",
-    image: "/categories/women.jpg",
-  },
-  {
-    label: "Hombre",
-    image: "/categories/hombre.jpg",
-  },
-  {
-    label: "Invierno",
-    image: "/categories/invierno.jpg",
-  },
-  {
-    label: "Verano",
-    image: "/categories/verano.jpg",
-  },
-  {
-    label: "Urbano",
-    image: "/categories/urbano.jpg",
-  },
-  {
-    label: "Rock",
-    image: "/categories/rock.jpg",
-  },
-  {
-    label: "Vintage",
-    image: "/categories/vintage.jpg",
-  },
-  {
-    label: "Étnico",
-    image: "/categories/etnico.jpg",
-  },
-  {
-    label: "Bussines",
-    image: "/categories/bussines.jpg",
-  },
-  {
-    label: "Casual",
-    image: "/categories/casual.jpg",
-  },
-  {
-    label: "Deportivo",
-    image: "/categories/sport.jpg",
-  },
-];
+
+const CategoriesList = () => {
+  const [categories, setCategories] = useState([])
+  const [error, setError] = useState(null);
+
+  const getCategories = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/categories/");
+      if (!response.ok) {
+        throw new Error("Error al obtener las categorías");
+      }
+      const data = await response.json();
+      setCategories(data);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      setError(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+  if (error) {
+    console.log("Error: ", error);
+    return [];
+  }
+
+  return (categories);
+};
+
+// const getCategories = async () => {
+//   try {
+//     const response = await fetch(
+//       "http://localhost:3000/api/categories/"
+//     );
+//     const categories = await response.json();
+//     return categories
+//   } catch (error) {
+//     console.error("Error fetching categories:", error);
+//   }
+// };
+
+// const categories = [
+//   {
+//     label: "Mujer",
+//     image: "/categories/women.jpg",
+//   },
+//   {
+//     label: "Hombre",
+//     image: "/categories/hombre.jpg",
+//   },
+//   {
+//     label: "Invierno",
+//     image: "/categories/invierno.jpg",
+//   },
+//   {
+//     label: "Verano",
+//     image: "/categories/verano.jpg",
+//   },
+//   {
+//     label: "Urbano",
+//     image: "/categories/urbano.jpg",
+//   },
+//   {
+//     label: "Rock",
+//     image: "/categories/rock.jpg",
+//   },
+//   {
+//     label: "Vintage",
+//     image: "/categories/vintage.jpg",
+//   },
+//   {
+//     label: "Étnico",
+//     image: "/categories/etnico.jpg",
+//   },
+//   {
+//     label: "Bussines",
+//     image: "/categories/bussines.jpg",
+//   },
+//   {
+//     label: "Casual",
+//     image: "/categories/casual.jpg",
+//   },
+//   {
+//     label: "Deportivo",
+//     image: "/categories/sport.jpg",
+//   },
+// ];
+
