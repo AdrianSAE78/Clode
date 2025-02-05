@@ -12,7 +12,9 @@ const Profile = () => {
   const navigate = useNavigate();
   return (
     <Layout>
-      <h1>Mi perfil</h1>
+      <div className="header">
+        <h1 className="display-large">Mi Perfil</h1>
+      </div>
       {/* Card */}
       <div className="card">
         {/* Profile img */}
@@ -56,7 +58,7 @@ const Profile = () => {
       </div>
 
       <section>
-        <div className="next-appoiment">
+        <div className="next-appoiment1">
           <h2 className="headline-small">
             Intercambios <span className="body-large">próximos</span>
           </h2>

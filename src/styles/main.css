@@ -17,27 +17,65 @@
   justify-content: space-between;
   margin-bottom: 1.5rem;
 }
-.icon-bag {
-  width: 2.4375rem;
-  height: 2.4375rem;
+
+.admin-button-container {
+  position: absolute;
+  display: flex;
+  top: 2rem;
+  right: 22px;
+  width: 3%;
+  height: 3%;
+  align-items: center;
   object-fit: cover;
-  img {
-    width: 100%;
-  }
+  flex-direction: column;
+  border-radius: 1rem;
+  background-color: transparent;
+  padding: 1rem;
 }
+
+.admin-button img{
+  width: 100%;
+}
+
+.admin-button:hover {
+  background-color: var(--primary-fixed-dim) !important;
+}
+
+.icon-bag {
+  position: absolute;
+  display: flex;
+  top: 40px;
+  right: 4rem;
+  align-items: center;
+  object-fit: cover;
+  flex-direction: column;
+  border-radius: 1rem;
+  background-color: transparent;
+  padding: 1rem;
+  width: 8%;
+  height: 8%;
+  object-fit: cover;
+}
+
+.icon-bag img {
+  width: 100%;
+}
+
 .water-save {
   display: flex;
   justify-content: space-between;
 }
+
 .water-icon {
   width: 5.1875rem;
   height: 5.1875rem;
   border-radius: 1rem;
   padding: 0.5rem;
   background-color: var(--on-tertiary-container);
-  img {
-    width: 100%;
-  }
+}
+
+.water-icon img {
+  width: 100%;
 }
 
 .next-appoiment {
@@ -46,22 +84,23 @@
   color: white;
   border-radius: 1rem;
   padding: 1.5rem 1.25rem 1rem;
+}
 
-  .details {
-    margin-top: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+.next-appoiment .details {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
 
-    .text {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    .place {
-      font-weight: 700;
-    }
-  }
+.next-appoiment .details .text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.next-appoiment .details .place {
+  font-weight: 700;
 }
 
 .next-app-img {
@@ -70,11 +109,11 @@
   object-fit: cover;
   overflow: hidden;
   border-radius: 0.5rem;
+}
 
-  img {
-    width: 100%;
-    height: 100%;
-  }
+.next-app-img img {
+  width: 100%;
+  height: 100%;
 }
 
 .title-categories {
@@ -87,6 +126,7 @@
   justify-content: center;
   align-items: center;
 }
+
 .categorie-image-container {
   width: 3.625rem;
   height: 3.625rem;
@@ -94,48 +134,183 @@
   object-fit: cover;
   overflow: hidden;
   margin-bottom: 0.5rem;
-  img {
-    width: 100%;
-  }
 }
+
+.categorie-image-container img {
+  width: 100%;
+}
+
 .catalog-home {
   margin: 1.5rem 0;
 }
 
-/* Item */
-.item-catalog {
-  max-width: 8.1875rem;
-
-  .description {
-    margin: 0 0.25rem;
+/* Estilos Responsive para Desktop */
+@media (min-width: 1024px) {
+  .body-custom {
+    background-color: var(--surface-container);
+    padding: 2rem 1rem;
+    width: 97vw;
+    height: 90vh;
   }
-}
-.item-catalog-image-container {
-  width: 8.1875rem;
-  height: 8.1875rem;
-  object-fit: cover;
-  overflow: hidden;
-
-  img {
-    width: 100%;
-    height: 100%;
+  
+  .layout {
+    display: grid;
+    grid-template-columns: 15% 85%; /* 15% barra de navegación, 85% contenido */
+    height: 100vh;
   }
-}
-.item-catalog-categorie {
-  display: flex;
-  padding: 0.5rem 0.25rem;
-  gap: 0.5rem;
-  align-items: center;
 
-  .icon {
-    width: 1.125rem;
-    height: 1.125rem;
-    border-radius: 100%;
+  .header h1 {
+    position: absolute;
+    top: 1rem;
+    left: 6.5rem;
+    font-size: 4rem;
+    font-weight: bold;
+  }
+
+
+  .next-appoiment {
+    position: absolute;
+    display: flex;
+    flex-direction:column;
+    align-items:center;
+    top: 5rem;
+    left: 6.5rem;
+    width: 40%;
+    height: 24%;
+    background-color: var(--primary);
+    padding: 1.5rem;
+    border-radius: 1rem;
+ 
+  }
+
+  .next-app-img {
+    position: absolute; /* Control absoluto dentro de su contenedor */
+    top: 50%; /* Ajustar verticalmente */
+    left: 10%; /* Ajustar horizontalmente */
+    transform: translateY(-50%); /* Centrar verticalmente */
+    width: 8rem; /* Tamaño de la imagen */
+    height: 8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .next-app-img img {
+    width: 100%; /* Ajustar la imagen al contenedor */
+    height: auto;
     object-fit: cover;
-    overflow: hidden;
+    border-radius: 0.5rem;
+  }
+  
 
-    img {
-      width: 100%;
-    }
+  .next-appoiment .details {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .catalog-home {
+    position: absolute;
+    bottom: 0rem;
+    left: 6.5rem;
+    width: 40%;
+    height: 40%;
+    color: white;
+    background-color: var(--primary);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .water-save .headline-small {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    top: 6.5rem;
+    right: 17rem;
+    width: 28%;
+    height: 23%;
+    border: 2px solid var(--on-tertiary-container);
+    background-color: transparent;
+    padding: 1.5rem;
+    border-radius: 1rem;
+  }
+
+  .water-icon {
+    position: absolute;
+    top: 6.5rem;
+    right: 7rem;
+    width: 10%;
+    height: 23.5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    background-color: var(--on-tertiary-container);
+  }
+
+  .admin-button-container {
+    position: absolute;
+    display: flex;
+    top: 1rem;
+    right: 7rem;
+    width: 3%;
+    height: 3%;
+    align-items: center;
+    object-fit: cover;
+    flex-direction: column;
+    border-radius: 1rem;
+    background-color: transparent;
+    padding: 1rem;
+  }
+
+  .admin-button img{
+    width: 100%;
+  }
+
+  .title-categories {
+    margin-bottom: 0.5rem;
+  }
+
+  .icon-bag {
+    position: absolute;
+    display: flex;
+    width: 3%;
+    height: 3%;
+    object-fit: cover;
+    top: 1rem;
+    right: 15rem;
+    flex-direction: column;
+    padding: 1rem;
+  }
+  
+  .icon-bag img {
+    width: 100%;
+  }
+
+  .categorie-box{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    bottom: 12.4rem;
+    right: 6.8rem;
+    width: 39%;
+    height: 15%;
+    color: white;
+    background-color: var(--on-tertiary-container);
+    padding: 1.5rem;
+    border-radius: 1rem;
+  }
+
+  .categorie-image-container img {
+    width: 100%;
   }
 }

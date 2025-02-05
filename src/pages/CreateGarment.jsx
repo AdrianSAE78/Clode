@@ -81,7 +81,9 @@ const CreateGarment = () => {
 
   return (
     <Layout>
-      <h1>Nueva prenda</h1>
+      <div className="header">
+        <h1 className="display-large">Nueva Prenda</h1>
+      </div>
       <div>
         {!image && (
           <div className="cam-cont">
@@ -169,7 +171,7 @@ const CreateGarment = () => {
           <div className="item-form">
             <p className="body-large bold">Selecciona el estado de tu prenda</p>
             <p className="body-medium">
-              Te pedimos que elijas la mayor sinceridad en este campo. Recuerda
+              Te pedimos que elijas con la mayor sinceridad en este campo. Recuerda
               que no está permitido el intercambio en mal estado, a menos que
               quieras que la prenda que recibes esté en el mismo estado.
             </p>
