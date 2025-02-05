@@ -43,3 +43,42 @@
     }
   }
 }
+
+/* Estilos para desktop: Navbar en columna y distribución de contenido */
+@media (min-width: 1024px) {
+  .navbar {
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 90vh;
+    width: 4%;
+    left: 1rem;
+    top: 1rem;
+    background-color: var(--on-tertiary-container);
+    padding-top: 2rem;
+  }
+
+  .navbar ul {
+    flex-direction: column;
+    width: 100%;
+    padding: 0;
+  }
+
+  .navbar li {
+    margin-bottom: 15rem;
+  }
+
+  .main-container {
+    display: grid;
+    grid-template-columns: 5% 95%; /* 15% barra de navegación, 85% contenido */
+    height: 100vh;
+  }
+
+  .main-content {
+    margin-left: 15%;
+    padding: 2rem;
+    width: 50%;
+  }
+}

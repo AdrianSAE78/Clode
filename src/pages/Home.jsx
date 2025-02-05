@@ -1,4 +1,5 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import CircleLabels from "../components/circleLabels";
 import Catalog from "../components/catalog";
 import "../styles/main.css";
@@ -7,120 +8,133 @@ import Layout from "./layout";
 import React, { useState, useEffect } from "react";
 
 const Home = () => {
+  const navigate = useNavigate();
   const categories = CategoriesList();
   if (!Array.isArray(categories)) {
     return <div>Cargando categorías...</div>;
   }
+
   return (
     <Layout>
-      <div className="header">
-        <h1 className="display-large">InterMod</h1>
-        <div className="icon-bag">
-          <img src="/icons/bag.png" alt="Liked bag" />
-        </div>
+      <div className="main-content">
+        <Header navigate={navigate} />
+        <AdminButton navigate={navigate}/>
+        <WaterSave />
+        <NextAppointment />
+        <CategoriesSection categories={categories} />
+        <CatalogSection />
       </div>
-      {/* fist section */}
-      <section className="water-save">
-        <div className="headline-small">
-          <p>Has ahorrado 54 litros.</p>
-          <p>Increíble, sigue así</p>
-        </div>
-        <div>
-          <div className="water-icon">
-            <img src="/icons/water-recicle-icon.png" />
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <div className="next-appoiment">
-          <h2 className="headline-small">
-            Intercambios <span className="body-large">próximos</span>
-          </h2>
-          <div className="details">
-            {/* img de proximo intercambio */}
-            <div className="next-app-img">
-              <img src={zapatos} alt="Image del siguiente intercambio" />
-            </div>
-            {/* Contenedor de información de cita */}
-            <div className="body-large text">
-              {/* fecha */}
-              <p>Lunes 07 de enero, 2024</p>
-              {/* ubicación estática */}
-              <p className="place">Patio central -PUCE</p>
-              {/* Hora disponible */}
-              <p>12:00</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        {/* Categorie filter */}
-        <div>
-          <h2 className="body-medium title-categories">
-            Buscar por categorías
-          </h2>
-          {/* Container con scroll hacia la izquierda */}
-          <Box
-            sx={{
-              display: "flex",
-              gap: 2,
-              py: 1,
-              overflow: "auto",
-              width: "full",
-              scrollSnapType: "x mandatory",
-              "& > *": {
-                scrollSnapAlign: "center",
-                flexShrink: 0,
-              },
-              "::-webkit-scrollbar": { display: "none" },
-              msOverflowStyle: "none",
-              scrollbarWidth: "none",
-            }}
-          >
-            {categories.map((item) => (
-              <CircleLabels
-                key={item.categorie_name}
-                label={item.categorie_name}
-                imgSrc={item.categorie_picture}
-              />
-            ))}
-          </Box>
-        </div>
-        {/* Catálogo home */}
-        <div className="catalog-home">
-          <h2 className="body-medium title-categories">Recomendados para ti</h2>
-          {/* Insertar catálogo sin preferencia alguna, solo los artículos más recientes. */}
-          <Catalog />
-        </div>
-      </section>
     </Layout>
   );
 };
 
-export default Home;
+const AdminButton = ({ navigate }) => (
+  <div className="admin-button-container">
+    <Button className="admin-button" onClick={() => navigate("/admin")}>
+      <img
+        src="/icons/admin-icon.png" /* Asegúrate de que la ruta sea correcta */
+        alt="Admin Icono"/>
+    </Button>
+  </div>
+);
 
+const Header = ({ navigate }) => (
+  <div className="header">
+    <h1 className="display-large">InterMod</h1>
+    <div className="icon-bag">
+      <img src="/icons/bag.png" alt="Liked bag" />
+    </div>
+  </div>
+);
+
+const WaterSave = () => (
+  <section className="water-save">
+    <div className="headline-small">
+      <p>Has ahorrado 54 litros.</p>
+      <p>Increíble, sigue así</p>
+    </div>
+    <div>
+      <div className="water-icon">
+        <img src="/icons/water-recicle-icon.png" />
+      </div>
+    </div>
+  </section>
+);
+
+const NextAppointment = () => (
+  <section>
+    <div className="next-appoiment">
+      <h2 className="headline-small">
+        Intercambios <span className="body-large">próximos</span>
+      </h2>
+      <div className="details">
+        <div className="next-app-img">
+          <img src={zapatos} alt="Image del siguiente intercambio" />
+        </div>
+        <div className="body-large text">
+          <p>Lunes 07 de enero, 2024</p>
+          <p className="place">Patio central -PUCE</p>
+          <p>12:00</p>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+const CategoriesSection = ({ categories }) => (
+  <section>
+    <div className="categorie-box">
+      <h2 className="body-medium title-categories">Buscar por categorías</h2>
+      <Box
+        sx={{
+          display: "flex",
+          gap: 2,
+          py: 1,
+          overflow: "auto",
+          width: "full",
+          scrollSnapType: "x mandatory",
+          "& > *": {
+            scrollSnapAlign: "center",
+            flexShrink: 0,
+          },
+          "::-webkit-scrollbar": { display: "none" },
+          msOverflowStyle: "none",
+          scrollbarWidth: "none",
+        }}
+      >
+        {categories.map((item) => (
+          <CircleLabels key={item.categorie_name} label={item.categorie_name} imgSrc={item.categorie_picture} />
+        ))}
+      </Box>
+    </div>
+  </section>
+);
+
+const CatalogSection = () => (
+  <section className="catalog-home">
+    <h2 className="body-medium title-categories">Recomendados para ti</h2>
+    <Catalog />
+  </section>
+);
 
 const CategoriesList = () => {
-  const [categories, setCategories] = useState([])
+  const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
 
-  const getCategories = async () => {
-    try {
-      const response = await fetch("http://localhost:3000/api/categories/");
-      if (!response.ok) {
-        throw new Error("Error al obtener las categorías");
-      }
-      const data = await response.json();
-      setCategories(data);
-    } catch (error) {
-      console.error("Error fetching categories:", error);
-      setError(error.message);
-    }
-  };
-
   useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/api/categories/");
+        if (!response.ok) {
+          throw new Error("Error al obtener las categorías");
+        }
+        const data = await response.json();
+        setCategories(data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+        setError(error.message);
+      }
+    };
     getCategories();
   }, []);
 
@@ -129,8 +143,11 @@ const CategoriesList = () => {
     return [];
   }
 
-  return (categories);
+  return categories;
 };
+
+export default Home;
+
 
 // const getCategories = async () => {
 //   try {
