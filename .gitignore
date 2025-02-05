@@ -1,41 +1,34 @@
-# Ignorar el entorno virtual en la raíz
-.venv/
-venv/
+# Node Modules
+node_modules/
 
-# Archivos de configuración y dependencias
-*.pyc
-*.pyo
-*.pyd
-*.sqlite3
-*.env
-*.log
-
-# Carpetas generadas por Python
-_pycache_/
-*.py[cod]
-
-# Ignorar configuraciones de IDEs/editores
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 .vscode/
-.idea/
-*.swp
-*~
 
-# Archivos creados por el sistema operativo
+# Production
+dist/
+
+# Local env files
+.env
+.env.local
+.env.*.local
+
+# IDE and editor-specific files
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
 .DS_Store
+
+# MacOS System files
+*.DS_Store
+
+# Windows System files
 Thumbs.db
 
-# Archivos estáticos generados
-staticfiles/
-#media/
-
-# Migraciones generadas (opcional, según el caso)
-migrations/*
-
-# Ignorar configuraciones locales y secretos
-local_settings.py
-
-# Archivos de compilación (si usas Docker u otros)
-*.bak
-*.orig
-*.tmp
-*.pid
+# Vite-specific cache
+.vite/
