@@ -1,0 +1,126 @@
+.nav-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem auto;
+}
+
+.arrow {
+  width: 2.125rem;
+
+  img {
+    max-width: 100%;
+  }
+}
+
+.bookmarks {
+  width: 2.5rem;
+
+  img {
+    max-width: 100%;
+  }
+}
+
+.img-details {
+  width: 23.75rem;
+  height: 23.75rem;
+
+  img {
+    max-width: 100%;
+  }
+}
+
+.date-available {
+  margin: 1rem 0;
+}
+
+.details {
+  margin: 1rem auto;
+}
+
+.exchange {
+  padding: 1rem;
+  border-radius: 15px;
+
+  .content {
+    margin: 0.75rem 0 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .clock {
+    width: 2.5rem;
+    margin: 0 0.25rem 0 0;
+
+    img {
+      max-width: 100%;
+    }
+  }
+}
+.ok-exchange {
+  background-color: var(--secondary-fixed);
+}
+
+.error-exchange {
+  background-color: var(--error-container);
+
+  .header {
+    align-items: start;
+  }
+  .notice-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+.action-btns {
+  margin: 1rem auto;
+  gap: 0.35rem;
+
+  button,
+  .button {
+    padding: 0.35rem 1rem;
+    border-radius: 10px;
+
+    gap:0.5rem;
+  }
+
+  .button {
+    text-decoration: none;
+    color: inherit;
+  }
+
+
+}
+
+.icon-btn {
+  width: 1.25rem;
+
+  img {
+    max-width: 100%;
+  }
+}
+
+.add-bookmark,
+.active-bookmark,
+.return-btn {
+  border: 1px solid var(--outline);
+  background-color: var(--on-primary);
+
+}
+
+.active-bookmark{
+    background-color: var(--background);
+}
+.make-exchange {
+  background-color: var(--primary);
+  color: var(--on-secondary);
+}
+
+.calendar-btn{
+    background-color: var(--error);
+}
