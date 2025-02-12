@@ -5,6 +5,7 @@ import Profile from './pages/Profile'
 import PublicProfile from './pages/PublicProfile'
 import GarmentDetails from './pages/GarmentDetails'
 import CreateGarment from './pages/CreateGarment'
+import Login from './pages/Login'
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path='/appoiment' element={<Appoiment/>}/>
         <Route path='/profile' element={<Profile/>}/>
         <Route path='/public-profile' element={<PublicProfile/>}/>
+        <Route path='/login' element={Login}/>
       </Routes>
     </Router>
   )
