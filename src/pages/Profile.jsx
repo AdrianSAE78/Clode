@@ -5,7 +5,7 @@ import "../styles/pages/profile.css";
 
 import photo from "../assets/profile.jpg";
 import zapatos from "../assets/products/calzado.jpg";
-import Layout from "./layout";
+import Layout from "./PrivateLayout";
 
 
 const Profile = () => {
