@@ -5,8 +5,12 @@ import "../styles/main.css";
 import zapatos from "../assets/products/calzado.jpg";
 import Layout from "./layout";
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+
 
 const Home = () => {
+  const navigate = useNavigate();
   const categories = CategoriesList();
   if (!Array.isArray(categories)) {
     return <div>Cargando categorías...</div>;
@@ -14,11 +18,17 @@ const Home = () => {
   return (
     <Layout>
       <div className="header">
-        <h1 className="display-large">InterMod</h1>
+        <h1 className="display-large">InterMod </h1>
         <div className="icon-bag">
           <img src="/icons/bag.png" alt="Liked bag" />
+        </div>  
+        <div>
+          <button className="admin-button" onClick={() => navigate("/admin")}><img
+        src="/icons/admin-icon.png"
+        alt="Admin Icono"/></button>
         </div>
       </div>
+
       {/* fist section */}
       <section className="water-save">
         <div className="headline-small">
@@ -92,7 +102,7 @@ const Home = () => {
         <div className="catalog-home">
           <h2 className="body-medium title-categories">Recomendados para ti</h2>
           {/* Insertar catálogo sin preferencia alguna, solo los artículos más recientes. */}
-          <Catalog />
+          <Catalog /> {/* 🔹 Aquí se insertan las prendas obtenidas del backend */}
         </div>
       </section>
     </Layout>
