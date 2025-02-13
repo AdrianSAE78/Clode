@@ -1,10 +1,14 @@
+import {useAuth} from "../context/AuthContext"
+import { Navigate } from "react-router-dom";
 import "../styles/login.css";
 import GoogleIcon from "../assets/google-icon.png";
 
 const Login = () => {
-  const loginHandler = () => {
-    return "hola";
-  };
+    const {user, loginWithGoogle} = useAuth()
+
+    if (user) {
+        return <Navigate to="/"/>
+    }
   return (
     <div className="body-custom">
       <div>
@@ -12,7 +16,7 @@ const Login = () => {
         <h2 className="headline-large">Bienvenido de nuevo</h2>
         <p className="body-large description">Ingresa mediante tu cuenta de Google</p>
 
-        <button className="btn-auth headline-small" onClick={loginHandler}>
+        <button className="btn-auth headline-small" onClick={loginWithGoogle}>
           <div className="icon">
             <img src={GoogleIcon} />
           </div>

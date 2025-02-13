@@ -19,7 +19,7 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/create-garment" element={<CreateGarment />} />
-          <Route path="/garmen-details" element={<GarmentDetails />} />
+          <Route path="/garment-details" element={<GarmentDetails />} />
           <Route path="/appoiment" element={<Appoiment />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/public-profile" element={<PublicProfile />} />
