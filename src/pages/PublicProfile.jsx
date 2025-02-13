@@ -3,7 +3,7 @@ import Metrics from "../components/metrics";
 import "../styles/pages/profile.css";
 import "../styles/main.css";
 import photo from "../assets/profile.jpg";
-import Layout from "./layout";
+import Layout from "./PrivateLayout";
 
 const PublicProfile = () => {
   const navigate = useNavigate();

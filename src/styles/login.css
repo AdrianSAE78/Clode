@@ -1,0 +1,46 @@
+/* Importa estilos base */
+@import "./base/reset.css";
+@import "./base/global.css";
+
+/* Importa variables y mixins */
+@import "./utils/variables.css";
+
+.body-custom {
+  background-color: var(--on-primary);
+  padding: 2rem 1rem;
+  text-align: center;
+  height: 100vh;
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+}
+
+.title {
+  margin: 4.0625rem auto;
+}
+
+.description{
+    margin: 2.1875rem auto 3.625rem;
+}
+
+.btn-auth {
+  border: 1px solid var(--outline);
+  background-color: var(--background);
+  width: 100%;
+  border-radius: 16px;
+
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  gap:1rem
+}
+
+.icon {
+  width: 3.4375rem;
+
+  img {
+    max-width: 100%;
+  }
+}

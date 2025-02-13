@@ -3,8 +3,8 @@ import CircleLabels from "../components/circleLabels";
 import Catalog from "../components/catalog";
 import "../styles/main.css";
 import zapatos from "../assets/products/calzado.jpg";
-import Layout from "./layout";
-import React, { useState, useEffect } from "react";
+import Layout from "./PrivateLayout";
+import { useState, useEffect } from "react";
 
 const Home = () => {
   const categories = CategoriesList();

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import MenuForm from "../components/menuForm";
 import "../styles/main.css";
 import "../styles/pages/new-garment.css";
-import Layout from "./layout";
+import Layout from "./PrivateLayout";
 
 const CreateGarment = () => {
   const navigate = useNavigate();
