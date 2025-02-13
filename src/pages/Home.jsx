@@ -3,10 +3,9 @@ import CircleLabels from "../components/circleLabels";
 import Catalog from "../components/catalog";
 import "../styles/main.css";
 import zapatos from "../assets/products/calzado.jpg";
-import Layout from "./layout";
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import Layout from "./PrivateLayout";
+import { useState, useEffect } from "react";
 
 
 const Home = () => {

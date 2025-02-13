@@ -2,11 +2,11 @@ import { Box, TextField } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Layout from "./layout";
 import MenuForm from "../components/menuForm";
 import CustomModal from "../components/CustomModal";
 import "../styles/pages/new-garment.css";
 import "../styles/main.css";
+import Layout from "./PrivateLayout";
 
 const CreateGarment = () => {
   const navigate = useNavigate();
