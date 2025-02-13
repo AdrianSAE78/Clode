@@ -6,7 +6,6 @@ import MenuForm from "../components/menuForm";
 import CustomModal from "../components/CustomModal";
 import "../styles/pages/new-garment.css";
 import "../styles/main.css";
-import Layout from "./PrivateLayout";
 
 const CreateGarment = () => {
   const navigate = useNavigate();
@@ -136,7 +135,7 @@ const CreateGarment = () => {
 
     // Envio
     try {
-      const response = await axios.post(
+      await axios.post(
         "http://localhost:3000/api/garments",
         formData,
         {
@@ -159,7 +158,7 @@ const CreateGarment = () => {
   };
 
   return (
-    <Layout>
+    <>
       {/* Encabezado */}
       <div className="header">
         <h1 className="display-large">Nueva Prenda</h1>
@@ -295,7 +294,7 @@ const CreateGarment = () => {
         title={modalTitle}
         message={modalMessage}
       />
-    </Layout>
+    </>
   );
 };
 

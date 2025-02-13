@@ -1,7 +1,6 @@
 import { Card, Typography, Box, Avatar, Button, TextField, Modal, Menu, MenuItem } from '@mui/material';
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Layout from "./layout";
 import "../styles/pages/admin.css";
 
 const AdminDashboard = () => {
@@ -203,7 +202,7 @@ const AdminDashboard = () => {
 
 
   return (
-    <Layout>
+    <>
       <Box className="admin-dashboard">
         <Box className="header-admin">
           <Typography variant="h4" className="title">InterMod</Typography>
@@ -316,7 +315,7 @@ const AdminDashboard = () => {
           </Box>
         </Card>
       </Box>
-    </Layout>
+    </>
   );
 };
 

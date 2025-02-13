@@ -4,7 +4,6 @@ import Catalog from "../components/catalog";
 import "../styles/main.css";
 import zapatos from "../assets/products/calzado.jpg";
 import { useNavigate } from "react-router-dom";
-import Layout from "./PrivateLayout";
 import { useState, useEffect } from "react";
 
 
@@ -15,7 +14,7 @@ const Home = () => {
     return <div>Cargando categorías...</div>;
   }
   return (
-    <Layout>
+    <>
       <div className="header">
         <h1 className="display-large">InterMod </h1>
         <div className="icon-bag">
@@ -104,7 +103,7 @@ const Home = () => {
           <Catalog /> {/* 🔹 Aquí se insertan las prendas obtenidas del backend */}
         </div>
       </section>
-    </Layout>
+    </>
   );
 };
 

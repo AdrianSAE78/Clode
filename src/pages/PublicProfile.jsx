@@ -3,12 +3,11 @@ import Metrics from "../components/metrics";
 import "../styles/pages/profile.css";
 import "../styles/main.css";
 import photo from "../assets/profile.jpg";
-import Layout from "./PrivateLayout";
 
 const PublicProfile = () => {
   const navigate = useNavigate();
   return (
-    <Layout>
+    <>
       <h1>Mi perfil</h1>
       {/* Card */}
       <div className="card">
@@ -51,7 +50,7 @@ const PublicProfile = () => {
           + Agrega prendas para intercambiar
         </button>
       </div>
-    </Layout>
+    </>
   );
 };
 
