@@ -6,6 +6,7 @@ import MenuForm from "../components/menuForm";
 import "../styles/main.css";
 import "../styles/pages/new-garment.css";
 import Layout from "./layout";
+import axios from "axios"; //Realizar peticiones http
 
 const CreateGarment = () => {
   const navigate = useNavigate();
@@ -46,26 +47,48 @@ const CreateGarment = () => {
     return Object.keys(newErrors).length === 0; // Devuelve true si no hay errores
   };
 
-  const submitHandler = () => {
+  const submitHandler = async (e) => {
+    e.preventDefault(); // Evita la recarga de la página
+  
     if (!validate()) {
       console.log("Formulario no válido", errors);
-      return; // Detener el envío si hay errores
+      return;
     }
+  
+    const formData = new FormData();
+    formData.append("title", name);
+    formData.append("description", "Descripción predeterminada"); // Puedes agregar un campo de descripción
+    formData.append("size", talla);
+    formData.append("condition", estado);
+    formData.append("brand", "Sin marca"); // Si quieres agregar un campo de marca, agrégalo en el formulario
+    formData.append("garment_image", image); // Imagen del archivo
+  
+    // 🔹 Agrega este console.log para verificar los datos antes de enviarlos
+    console.log("Datos enviados:", Object.fromEntries(formData.entries()));
 
-    console.log("Datos enviados:", toSend);
+    try {
+      const response = await axios.post("http://localhost:3000/api/garments", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+  
+      console.log("Prenda creada:", response.data);
+      alert("Prenda creada exitosamente");
+      navigate("/"); // Redirigir a Home después de crear
+    } catch (error) {
+      console.error("Error al crear prenda:", error.response?.data || error.message);
+      alert("Error al crear la prenda: " + (error.response?.data?.error || "Error desconocido"));
+    }
+};
 
-    navigate("/"); 
-  };
-
+  
   // Función para manejar la captura de imágenes
   const handleCapture = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setImage(reader.result);
-      };
-      reader.readAsDataURL(file);
+      setImage(file);
+      console.log("Imagen seleccionada:", file);
     }
   };
 
@@ -81,7 +104,9 @@ const CreateGarment = () => {
 
   return (
     <Layout>
-      <h1>Nueva prenda</h1>
+      <div className="header">
+        <h1 className="display-large">Nueva Prenda</h1>
+      </div>
       <div>
         {!image && (
           <div className="cam-cont">
@@ -169,7 +194,7 @@ const CreateGarment = () => {
           <div className="item-form">
             <p className="body-large bold">Selecciona el estado de tu prenda</p>
             <p className="body-medium">
-              Te pedimos que elijas la mayor sinceridad en este campo. Recuerda
+              Te pedimos que elijas con la mayor sinceridad en este campo. Recuerda
               que no está permitido el intercambio en mal estado, a menos que
               quieras que la prenda que recibes esté en el mismo estado.
             </p>
