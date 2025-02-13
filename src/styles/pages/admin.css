@@ -1,0 +1,292 @@
+/* Importa estilos base */
+@import "../base/reset.css";
+@import "../base/global.css";
+
+/* Importa variables y mixins */
+@import "../utils/variables.css";
+
+/* Contenedor principal del dashboard */
+.admin-dashboard {
+    display: grid;
+    gap: 1rem;
+    padding: 1rem;
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  
+  /* Encabezado */
+  .header-admin {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+  }
+  
+  .title {
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+  
+  .subtitle {
+    font-size: 1.2rem;
+    color: var(--on-tertiary-container); 
+  }
+  
+  .admin-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  /* 🔹 Sección general de administración */
+  .admin-section {
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+  
+  /* 🔹 Gestión de Categorías */
+  /* Sección de categorías */
+.categories {
+    background-color: var(--on-tertiary-container);  /* Fondo oscuro */
+    border: 3px solid var(--primary); /* verde */
+    color: var(--primary);
+    padding: 1rem;
+    border-radius: 1rem;
+    text-align: center;
+}
+
+/* Contenedor de categorías con desplazamiento horizontal */
+.categories-container {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    overflow-x: auto; /* Habilita el desplazamiento horizontal */
+    scroll-snap-type: x mandatory; /* Hace que los elementos encajen al desplazarse */
+    padding-left: 10px; /* Asegura espacio a la izquierda para la primera categoría */
+}
+
+/* Cada categoría con imagen redonda */
+.category-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 0 0 auto; /* Evita que los elementos colapsen */
+    scroll-snap-align: center; /* Centra los elementos al hacer scroll */
+}
+
+/* Estilo de la imagen circular */
+.category-image {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Nombre de la categoría */
+.category-name {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+.add-category-button button{
+    background-color: var(--on-tertiary-container); 
+    color: white;
+}
+  
+  /* 🔹 Gestión de Usuarios */
+  .users {
+    border: 3px solid var(--primary); /* verde */
+    min-height: 120px;
+    color: var(--primary);
+  }
+  
+  /* 🔹 Gestión de Prendas */
+  .garments {
+    border: 3px solid var(--primary); /* verde */
+    color: var(--primary);
+  }
+  
+  .garment-container {
+    color: var(--on-tertiary-container); 
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding: 0.5rem 0;
+  }
+  
+  .garment-item {
+    background-color: white;
+    color: black;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+    min-width: 120px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* 🔹 Scroll suave para listas */
+  .categories-container::-webkit-scrollbar,
+  .garment-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* 🔹 Iconos de navegación */
+  .nav-icons {
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--primary);
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+
+  /* 🔹 Estilos del modal */
+.modal-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+  }
+  
+  .modal-content {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    width: 90%; /* Para mobile */
+    max-width: 400px; /* En desktop no se extiende demasiado */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+  }
+  
+  /* Botón de archivo */
+  input[type="file"] {
+    margin-top: 10px;
+    font-size: 14px;
+    border: none;
+  }
+  
+  /* Mejorar botones */
+  .modal-buttons button {
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .modal-buttons button:first-child {
+    background-color: var(--primary);
+    color: white;
+  }
+  
+  .modal-buttons button:last-child {
+    background-color: var(--on-tertiary-container); 
+    color: white;
+  }
+
+  /* Estilos generales del menú */
+.MuiMenu-paper {
+    background-color: white; /* Fondo blanco del menú */
+    border-radius: 8px; /* Bordes redondeados */
+}
+
+/* 🔹 Estilos generales para los botones del menú */
+.menu-item {
+    color: black !important; /* Letras negras */
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 🔹 Estilos al pasar el cursor sobre el botón "Editar" */
+.edit-category:hover {
+    background-color: var(--on-tertiary-container) !important; /* Azul claro */
+    color: white !important; /* Letras blancas */
+}
+
+/* 🔹 Estilos al pasar el cursor sobre el botón "Eliminar" */
+.delete-category:hover {
+    background-color: var(--on-error-container)  !important; /* Rojo rosado */
+    color: white !important; /* Letras blancas */
+}
+
+/*Imagen previa de editar imagen*/
+.preview-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: 10px auto;
+}
+
+/* contenedor usuarios*/
+
+.user-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem;
+  border-radius: 8px;
+  background: #f8f9fa;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.user-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: bold;
+}
+
+.user-email {
+  color: gray;
+  font-size: 0.9rem;
+}
+
+.user-status {
+  font-weight: bold;
+}
+
+.user-status.blocked {
+  color: red;
+}
+
+.user-status.active {
+  color: green;
+}
+
+.user-role {
+  font-style: italic;
+  color: #007bff;
+}
+
+  

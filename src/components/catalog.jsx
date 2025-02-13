@@ -1,48 +1,49 @@
 import { Box } from "@mui/material";
-import camisa from "../assets/products/camisa.jpg";
-import calzado from "../assets/products/calzado.jpg";
 import ItemCatalog from "./itemCatalog";
 import { useEffect, useState } from "react";
 
 const Catalog = () => {
   const [data, setData] = useState([]);
+  const [categories, setCategories] = useState({}); // Guardaremos las categorías con sus IDs
 
+  // 🔹 Obtener categorías desde la API y guardarlas en un objeto {id: nombre}
+  const getCategories = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/categories/");
+      if (!response.ok) throw new Error("Error al obtener las categorías");
+
+      const categoryData = await response.json();
+      const categoryMap = categoryData.reduce((acc, category) => {
+        acc[category.id] = {
+          name: category.categorie_name,
+          icon: `http://localhost:3000/uploads/${category.categorie_picture}`
+        };
+        return acc;
+      }, {});
+
+      setCategories(categoryMap);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
+
+  // 🔹 Obtener las prendas desde la API
   const getGarments = async () => {
     try {
-      const response = await fetch(
-        "http://localhost:3000/api/garments/"
-      );
+      const response = await fetch("http://localhost:3000/api/garments/");
+      if (!response.ok) throw new Error("Error al obtener las prendas");
+
       const garments = await response.json();
-      const updatedData = matchCategoriesWithData(garments, categories);
-      setData(updatedData);
+      setData(garments); 
     } catch (error) {
       console.error("Error fetching garments:", error);
     }
   };
 
-  const matchCategoriesWithData = (data, categories) => {
-    return data.map((product) => {
-      const matchedCategory = categories.find(
-        (category) => category.label === product.category
-      );
-
-      return {
-        ...product,
-        categorie: {
-          name: product.category,
-          icon: matchedCategory ? matchedCategory.image : null,
-        },
-        img: product.garment_image,
-        name: product.title,
-      };
-    });
-  };
-
   useEffect(() => {
-    getGarments();
+    getCategories(); // Obtener categorías al cargar el componente
+    getGarments(); // Obtener prendas
   }, []);
-
-  // const updatedData = matchCategoriesWithData(data, categories);
 
   return (
     <Box
@@ -63,97 +64,24 @@ const Catalog = () => {
       }}
     >
       {data.length === 0 ? (
-      <div>Loading...</div> // Puedes agregar un spinner o mensaje aquí
-    ) : (
-      data.map((item) => (
-        <ItemCatalog
-          key={item.id}
-          image={item.img}
-          icon={item.categorie.icon}
-          categorieName={item.categorie.name}
-          itemDescription={item.description}
-        />
-      ))
-    )}
+        <div>Cargando prendas...</div> 
+      ) : (
+        data.map((item) => {
+          const categoryInfo = categories[item.categoryId] || { name: "Sin categoría", icon: "/icons/default-icon.png" };
+
+          return (
+            <ItemCatalog
+              key={item.id}
+              image={`http://localhost:3000/uploads/${item.garment_image}`}
+              icon={categoryInfo.icon} 
+              categorieName={categoryInfo.name} 
+              itemDescription={item.description}
+            />
+          );
+        })
+      )}
     </Box>
   );
 };
 
 export default Catalog;
-
-const data = [
-    {
-        id:1,
-        img:camisa,
-        categorie:{
-            name:"Verano",
-            icon:'/categories/verano.jpg'
-        },
-        name:"Camisa de varios colores"
-    },
-    {
-        id:2,
-        img:calzado,
-        categorie:{
-            name:"Urbano",
-            icon:'/categories/verano.jpg'
-        },
-        name:"Zapatos de color verde"
-    },
-    {
-      id:3,
-      img:camisa,
-      categorie:{
-          name:"Rock",
-          icon:'/categories/verano.jpg'
-      },
-      name:"Camisas hipster"
-  }
-]
-
-const categories = [
-  {
-    label: "Camisas",
-    image: "/categories/women.jpg",
-  },
-  {
-    label: "Pantalones",
-    image: "/categories/hombre.jpg",
-  },
-  {
-    label: "Chaquetas",
-    image: "/categories/invierno.jpg",
-  },
-  {
-    label: "Calzado",
-    image: "/categories/verano.jpg",
-  },
-  {
-    label: "Blusas",
-    image: "/categories/urbano.jpg",
-  },
-  {
-    label: "Faldas",
-    image: "/categories/rock.jpg",
-  },
-  {
-    label: "Accesorios",
-    image: "/categories/vintage.jpg",
-  },
-  {
-    label: "Étnico",
-    image: "/categories/etnico.jpg",
-  },
-  {
-    label: "Bussines",
-    image: "/categories/bussines.jpg",
-  },
-  {
-    label: "Casual",
-    image: "/categories/casual.jpg",
-  },
-  {
-    label: "Deportivo",
-    image: "/categories/sport.jpg",
-  },
-];
