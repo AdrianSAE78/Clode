@@ -4,7 +4,7 @@ import Catalog from "../components/catalog";
 import "../styles/main.css";
 import zapatos from "../assets/products/calzado.jpg";
 import Layout from "./layout";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 

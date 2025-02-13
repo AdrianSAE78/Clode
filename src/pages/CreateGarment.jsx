@@ -1,39 +1,44 @@
 import { Box, TextField } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import MenuForm from "../components/menuForm";
-import "../styles/main.css";
-import "../styles/pages/new-garment.css";
+import axios from "axios";
 import Layout from "./layout";
-
-import axios from "axios"; // Para realizar peticiones HTTP
+import MenuForm from "../components/menuForm";
+import CustomModal from "../components/CustomModal";
+import "../styles/pages/new-garment.css";
+import "../styles/main.css";
 
 const CreateGarment = () => {
   const navigate = useNavigate();
-
-
   const [categories, setCategories] = useState([]);
 
-    useEffect(() => {
-      const fetchCategories = async () => {
-        try {
-          const response = await axios.get("http://localhost:3000/api/categories");
-          setCategories(response.data);
-        } catch (error) {
-          console.error("Error al obtener categorías:", error);
-        }
-      };
-
-      fetchCategories();
-    }, []);
-
-
   // Estados del formulario
-  const [image, setImage] = useState(null); // Estado para la imagen
-  const [name, setName] = useState(""); // Estado para el nombre/descripción
-  const [talla, setTalla] = useState(""); // Estado para la talla
-  const [categorie, setCategorie] = useState(""); // Estado para la categoría
-  const [estado, setEstado] = useState(""); // Estado para el estado de la prenda
+  const [image, setImage] = useState(null);
+  const [name, setName] = useState("");
+  const [size, setSize] = useState("");
+  const [categorie, setCategorie] = useState("");
+  const [estado, setEstado] = useState("");
+
+  // Estados para el modal
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [modalTitle, setModalTitle] = useState("");
+
+  // Get para categorias disponibles en sistema
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/api/categories"
+        );
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error al obtener categorías:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   // Función para manejar cambios en los inputs
   const handleInputChange = (setState) => (e) => {
@@ -41,15 +46,59 @@ const CreateGarment = () => {
   };
 
   const categorieHandler = (e) => {
-    setCategorie(e.target.value); // Guarda el valor seleccionado en el estado
+    setCategorie(e.target.value);
   };
 
-  // Función para manejar la captura de imágenes
+  // Funcion para comprimir tamaño de archivo
+  const compressImage = (file, callback) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target.result;
+
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+
+        const maxWidth = 1920;
+        const maxHeight = 1080;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxWidth || height > maxHeight) {
+          if (width > height) {
+            height *= maxWidth / width;
+            width = maxWidth;
+          } else {
+            width *= maxHeight / height;
+            height = maxHeight;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        ctx.drawImage(img, 0, 0, width, height);
+
+        // Convertir la imagen a JPEG con 90% de calidad
+        canvas.toBlob((blob) => callback(blob), "image/jpeg", 0.9);
+      };
+    };
+  };
+
+  // Función para manejar la captura y compresión de imágenes
   const handleCapture = (event) => {
     const file = event.target.files[0];
-    if (file) {
-      setImage(file); // Guarda el archivo de imagen
-    }
+
+    if (!file) return;
+
+    compressImage(file, (compressedBlob) => {
+      const compressedFile = new File([compressedBlob], file.name, {
+        type: "image/jpeg",
+      });
+      setImage(compressedFile);
+    });
   };
 
   // Función para enviar el formulario
@@ -57,8 +106,12 @@ const CreateGarment = () => {
     e.preventDefault();
 
     // Validación de campos obligatorios
-    if (!name || !talla || !categorie || !estado || !image) {
-      alert("Todos los campos son obligatorios, incluyendo la imagen.");
+    if (!name || !size || !categorie || !estado || !image) {
+      setModalTitle("Error");
+      setModalMessage(
+        "Todos los campos son obligatorios, incluyendo la imagen."
+      );
+      setModalOpen(true);
       return;
     }
 
@@ -66,7 +119,7 @@ const CreateGarment = () => {
     const formData = new FormData();
     formData.append("title", name);
     formData.append("description", name);
-    formData.append("size", talla);
+    formData.append("size", size);
     formData.append("condition", estado);
     formData.append("brand", "Sin Marca");
     formData.append("categoryId", categorie); // Se envía el ID de la categoría seleccionada
@@ -75,30 +128,35 @@ const CreateGarment = () => {
     if (image instanceof File) {
       formData.append("garment_image", image);
     } else {
-      alert("Por favor, selecciona una imagen válida.");
+      setModalTitle("Error");
+      setModalMessage("Por favor, selecciona una imagen válida.");
+      setModalOpen(true);
       return;
     }
 
-    // 🔹 Mostrar datos en consola antes de enviarlos
-    console.log("Datos enviados:", Object.fromEntries(formData.entries()));
-
+    // Envio
     try {
-      // Enviar datos al backend
-      const response = await axios.post("http://localhost:3000/api/garments", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(
+        "http://localhost:3000/api/garments",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
 
-      console.log("Prenda creada:", response.data);
-      alert("Prenda creada exitosamente");
-      navigate("/"); // Redirigir al home
+      setModalTitle("Éxito");
+      setModalMessage("Prenda creada exitosamente");
+      setModalOpen(true);
+      setTimeout(() => navigate("/"), 2000); // Redirige después de 2s
     } catch (error) {
-      console.error("Error al crear prenda:", error.response?.data || error.message);
-      alert("Error al crear la prenda: " + (error.response?.data?.error || "Error desconocido"));
+      setModalTitle("Error");
+      setModalMessage(
+        "Error al crear la prenda: " +
+          (error.response?.data?.error || "Error desconocido")
+      );
+      setModalOpen(true);
     }
-};
-
+  };
 
   return (
     <Layout>
@@ -148,7 +206,9 @@ const CreateGarment = () => {
         <Box autoComplete="off" component="form">
           {/* Campo de descripción */}
           <div className="item-form">
-            <p className="body-large bold">Ingresa la descripción de tu prenda</p>
+            <p className="body-large bold">
+              Ingresa la descripción de tu prenda
+            </p>
             <p className="body-medium">
               Mientras más sencillo y descriptivo el nombre, existen mayores
               chances de que logres un intercambio más rápido.
@@ -173,10 +233,10 @@ const CreateGarment = () => {
               prenda.
             </p>
             <MenuForm
-              options={menuOptions.tallas}
+              options={menuOptions.sizes}
               title="Selecciona la talla"
-              state={talla}
-              stateHandler={handleInputChange(setTalla)}
+              state={size}
+              stateHandler={handleInputChange(setSize)}
             />
           </div>
 
@@ -190,24 +250,24 @@ const CreateGarment = () => {
               conectarte con personas que estén buscando en este mismo estilo.
             </p>
             <MenuForm
-              options={categories.map(category => ({
+              options={categories.map((category) => ({
                 value: category.id, // Enviamos el ID de la categoría
-                name: category.categorie_name // Mostramos el nombre de la categoría
+                name: category.categorie_name, // Mostramos el nombre de la categoría
               }))}
               title="Selecciona la categoría"
               state={categorie}
               stateHandler={categorieHandler}
             />
-
           </div>
 
           {/* Campo de estado */}
           <div className="item-form">
             <p className="body-large bold">Selecciona el estado de tu prenda</p>
             <p className="body-medium">
-              Te pedimos que elijas con la mayor sinceridad en este campo. Recuerda
-              que no está permitido el intercambio en mal estado, a menos que
-              quieras que la prenda que recibes esté en el mismo estado.
+              Te pedimos que elijas con la mayor sinceridad en este campo.
+              Recuerda que no está permitido el intercambio en mal estado, a
+              menos que quieras que la prenda que recibes esté en el mismo
+              estado.
             </p>
             <MenuForm
               options={menuOptions.estado}
@@ -215,7 +275,6 @@ const CreateGarment = () => {
               state={estado}
               stateHandler={handleInputChange(setEstado)}
             />
-
           </div>
         </Box>
       </section>
@@ -229,6 +288,13 @@ const CreateGarment = () => {
           Publicar
         </button>
       </div>
+      {/* Modal que maneja errore */}
+      <CustomModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        title={modalTitle}
+        message={modalMessage}
+      />
     </Layout>
   );
 };
@@ -237,7 +303,7 @@ export default CreateGarment;
 
 // Opciones para los menús desplegables
 const menuOptions = {
-  tallas: [
+  sizes: [
     { value: "xs", name: "XS - Extra small" },
     { value: "s", name: "S - Small" },
     { value: "m", name: "M - Medium" },
