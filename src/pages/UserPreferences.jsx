@@ -3,86 +3,117 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import MenuForm from "../components/menuForm";
 import CustomModal from "../components/CustomModal";
-import TimeRangeSlider from "../components/timeRangeSlider";
+import TimeInput from "../components/TimePicker";
 import PreferedStyleLabel from "../components/PreferedStyleLabels";
+import dayjs from "dayjs";
+import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
+import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import "../styles/main.css";
 import "../styles/pages/user-preferences.css";
+import { menuOptions } from "../components/MenuOptionsPreferences";
+
+dayjs.extend(isSameOrAfter);
+dayjs.extend(isSameOrBefore);
 
 const UserPreferences = () => {
   const navigate = useNavigate();
-  const [prefered_free_hours, setFreeHours] = useState({
-    start: "",
-    end: "",
-  });
-  const [prefered_size, setSize] = useState("");
-  const [prefered_size_shoes, setShoesSize] = useState("");
-  const [prefered_style, setStyle] = useState([]);
-
-  const [categories, setCategories] = useState([]);
-
   // Estados para el modal
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [modalTitle, setModalTitle] = useState("");
+
+  // Estados de los inputs
+  const [startHour, setStartHour] = useState(null);
+  const [endHour, setEndHour] = useState(null);
+  const [preferedSize, setSize] = useState("");
+  const [preferedSizeShoes, setShoesSize] = useState("");
+  const [preferedStyle, setStyle] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const handleInputChange = (setState) => (e) => {
     setState(e.target.value);
   };
 
   const handleSelectStyle = (style) => {
-    setStyle(
-      (prevStyles) =>
-        prevStyles.includes(style)
-          ? prevStyles.filter((s) => s !== style) 
-          : [...prevStyles, style] 
+    setStyle((prevStyles) =>
+      prevStyles.includes(style)
+        ? prevStyles.filter((s) => s !== style)
+        : [...prevStyles, style]
     );
+  };
+
+  const handleStartChange = (newValue) => {
+    setStartHour(newValue ? dayjs(newValue) : null);
+  };
+
+  const handleEndChange = (newValue) => {
+    setEndHour(newValue ? dayjs(newValue) : null);
   };
 
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    // Validación de campos obligatorios
+    let errorMessages = [];
+
+    if (!startHour) {
+      errorMessages.push("Debe seleccionar una hora de inicio.");
+    }
+    if (!endHour) {
+      errorMessages.push("Debe seleccionar una hora de finalización.");
+    }
     if (
-      !prefered_free_hours ||
-      !prefered_size ||
-      !prefered_size_shoes ||
-      !prefered_style
+      startHour &&
+      endHour &&
+      dayjs(startHour).isSameOrAfter(dayjs(endHour))
     ) {
+      errorMessages.push(
+        `La hora de inicio (${startHour.format(
+          "HH:mm"
+        )}) debe ser menor que la de finalización (${endHour.format("HH:mm")}).`
+      );
+    }
+
+    if (!preferedSize) {
+      errorMessages.push("Debe seleccionar una talla de ropa.");
+    }
+    if (!preferedSizeShoes) {
+      errorMessages.push("Debe seleccionar una talla de zapatos.");
+    }
+    if (preferedStyle.length === 0) {
+      errorMessages.push("Debe seleccionar al menos un estilo preferido.");
+    }
+
+    if (errorMessages.length > 0) {
       setModalTitle("Error");
-      setModalMessage("Todos los campos son obligatorios.");
+      setModalMessage(errorMessages.join("\n"));
       setModalOpen(true);
       return;
     }
-
-    // // Crear FormData para enviar al backend
-    const formData = new FormData();
-    formData.append("prefered_free_hours", prefered_free_hours);
-    formData.append("prefered_size", prefered_size);
-    formData.append("prefered_size_shoes", prefered_size_shoes);
-    formData.append("prefered_style", prefered_style);
-    // formData.append("userId", id); // Se envía el ID de la categoría seleccionada
-    console.log(formData);
-    // // Envio
+    console.log(Array.isArray(preferedStyle))
     try {
-      await axios.post("http://localhost:3000/api/user-preferences", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+      await axios.post("http://localhost:3000/api/user-preferences", {
+        prefered_free_hours: {
+          start: startHour.format("HH:mm"),
+          end: endHour.format("HH:mm"),
+        },
+        prefered_size: preferedSize,
+        prefered_size_shoes: preferedSizeShoes,
+        prefered_style: [...preferedStyle],
       });
 
       setModalTitle("Éxito");
-      setModalMessage("Prenda creada exitosamente");
+      setModalMessage("Preferencias guardadas exitosamente.");
       setModalOpen(true);
-      setTimeout(() => navigate("/"), 2000); // Redirige después de 2s
+      setTimeout(() => navigate("/"), 2000);
     } catch (error) {
       setModalTitle("Error");
       setModalMessage(
-        "Error al crear la prenda: " +
+        "Error al guardar: " +
           (error.response?.data?.error || "Error desconocido")
       );
       setModalOpen(true);
-      //}
     }
   };
-
   useEffect(() => {
     const getCategories = async () => {
       try {
@@ -119,7 +150,7 @@ const UserPreferences = () => {
             <MenuForm
               options={menuOptions.sizes}
               title="Selecciona la talla"
-              state={prefered_size}
+              state={preferedSize}
               stateHandler={handleInputChange(setSize)}
             />
           </div>
@@ -134,7 +165,7 @@ const UserPreferences = () => {
             <MenuForm
               options={menuOptions.shoes}
               title="Selecciona la talla"
-              state={prefered_size_shoes}
+              state={preferedSizeShoes}
               stateHandler={handleInputChange(setShoesSize)}
             />
           </div>
@@ -148,14 +179,19 @@ const UserPreferences = () => {
               <strong> Puedes seleccionar más de uno.</strong>
             </p>
             <div className="container-categories">
-              {categories.map((item, index) => (
-                <PreferedStyleLabel
-                  key={item.categorie_name}
-                  label={item.categorie_name}
-                  colorIndex={index}
-                  onClick={handleSelectStyle}
-                />
-              ))}
+              {categories.map((item, index) => {
+                const isActive = preferedStyle.includes(item.categorie_name);
+
+                return (
+                  <PreferedStyleLabel
+                    key={item.categorie_name}
+                    label={item.categorie_name}
+                    colorIndex={index}
+                    onClick={handleSelectStyle}
+                    active={isActive}
+                  />
+                );
+              })}
             </div>
           </div>
 
@@ -170,13 +206,21 @@ const UserPreferences = () => {
             </p>
             <p className="body-medium">
               Recuerda que los intercambios solo se podrán hacer en el campus de
-              la universidad, de Lunes a Viernes
+              la universidad, de Lunes a Viernes.
             </p>
 
-            <TimeRangeSlider
-              newHour={prefered_free_hours}
-              setNewHour={setFreeHours}
-            />
+            <div className="hours-input">
+              <TimeInput
+                placeholder="Hora de inicio"
+                value={startHour}
+                onChange={handleStartChange}
+              />
+              <TimeInput
+                placeholder="Hora de finalización"
+                value={endHour}
+                onChange={handleEndChange}
+              />
+            </div>
           </div>
 
           {/* Botones de acción */}
@@ -187,7 +231,7 @@ const UserPreferences = () => {
             >
               Cancelar
             </button>
-            <button className="send headline-medium" onClick={submitHandler}>
+            <button className="send headline-medium" type="submit">
               Guardar
             </button>
           </div>
@@ -206,28 +250,4 @@ const UserPreferences = () => {
 
 export default UserPreferences;
 
-// Opciones para los menús desplegables
-const menuOptions = {
-  shoes: [
-    { value: "35EU / 3US", name: "35EU / 3US" },
-    { value: "36EU / 4US", name: "36EU / 4US" },
-    { value: "37EU / 5US", name: "37EU / 5US" },
-    { value: "38EU / 6US", name: "38EU / 6US" },
-    { value: "39EU / 7US", name: "39EU / 7US" },
-    { value: "40EU / 7.5US", name: "40EU / 7.5US" },
-    { value: "41EU / 8US", name: "41EU / 8US" },
-    { value: "42EU / 9US", name: "42EU / 9US" },
-    { value: "43EU / 10US", name: "43EU / 10US" },
-    { value: "44EU / 10.5US", name: "44EU / 10.5US" },
-    { value: "45EU / 11US", name: "45EU / 11US" },
-    { value: "46EU / 12US", name: "46EU / 12US" },
-    { value: "47EU / 13US", name: "47EU / 13US" },
-  ],
-  sizes: [
-    { value: "xs", name: "XS - Extra small" },
-    { value: "s", name: "S - Small" },
-    { value: "m", name: "M - Medium" },
-    { value: "l", name: "L - Large" },
-    { value: "xl", name: "XL - Extra large" },
-  ],
-};
+
