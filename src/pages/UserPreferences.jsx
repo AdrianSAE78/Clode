@@ -101,7 +101,7 @@ const UserPreferences = () => {
 
 
     return (
-        <div className="body-complete-profile">
+         <div className="body-complete-profile">
             <div className="header complete-profile">
                 <h1 className="headline-large">Completemos tu perfil</h1>
             </div>

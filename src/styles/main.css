@@ -28,16 +28,16 @@
 }
 
 .admin-button {
-  height: auto; /* Mantiene la proporción */
-  max-width: 60px; /* Tamaño máximo de la imagen */
+  height: auto; 
+  max-width: 60px; 
   max-height: 60px;
   border: none;
   img{
-    width: 100%; /* Ajusta la imagen al tamaño del contenedor */
+    width: 100%; 
   }
 }
 .admin-button:hover img {
-  transform: scale(1.1); /* 🔹 Hace que la imagen crezca ligeramente */
+  transform: scale(1.1); 
 }
 
 

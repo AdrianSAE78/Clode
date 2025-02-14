@@ -1,24 +1,25 @@
 import ItemNav from "../components/itemNav";
 import "../styles/layout.css";
 import { useAuth } from "../context/AuthContext";
-import { Navigate, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 const Layout = () => {
   const { user } = useAuth();
 
-  return user ? (
+  return (
     <div className="body-custom">
       <Outlet />
-      <nav className="navbar">
-        <ul>
-          {items.map((i) => {
-            return <ItemNav route={i.route} icon={i.icon} key={i.name} />;
-          })}
-        </ul>
-      </nav>
+
+      {user && (
+        <nav className="navbar">
+          <ul>
+            {items.map((i) => {
+              return <ItemNav route={i.route} icon={i.icon} key={i.name} />;
+            })}
+          </ul>
+        </nav>
+      )}
     </div>
-  ) : (
-    <Navigate to="/login" />
   );
 };
 
