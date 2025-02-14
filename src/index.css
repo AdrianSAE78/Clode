@@ -8,3 +8,13 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+button {
+  all: unset; /* Elimina todos los estilos predeterminados */
+  display: inline-block; /* Asegura que el botón mantenga su comportamiento de caja */
+  cursor: pointer; /* Mantiene la usabilidad */
+}
+
+/* Opcional: Quitar el contorno de foco */
+button:focus {
+  outline: none;
+}
