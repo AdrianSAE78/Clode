@@ -9,6 +9,7 @@ import CreateGarment from './pages/CreateGarment'
 import AdminDashboard from './pages/Admin'
 import Login from "./pages/Login";
 import Layout from "./pages/PrivateLayout";
+import UserPreferences from './pages/UserPreferences'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         {/* Ruta publica */}
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/complete-profile" element={<UserPreferences />} />
 
         {/* Rutas privadas */}
         <Route element={<Layout />}>
