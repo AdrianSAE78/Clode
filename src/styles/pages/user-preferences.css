@@ -1,0 +1,25 @@
+.body-complete-profile {
+  text-align:left;
+  min-height: 100vh;
+}
+
+.title-section{
+    margin-bottom: 1.25rem;
+    text-align: center;
+}
+
+.form {
+  margin: 1rem 0;
+
+  .item-form {
+    margin: 0 0 2.5rem;
+    p {
+      margin: 1rem 0;
+    }
+
+    .bold{
+      font-weight: 700;
+    }
+  }
+}
+

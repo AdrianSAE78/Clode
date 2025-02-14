@@ -10,21 +10,12 @@
   padding: 2rem 1rem;
 }
 
-.body-complete-profile{
-  background-color: var(--on-primary);
-  padding: 2.5rem 1.3rem;
-}
-
 /* Home and components styles */
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1.5rem;
-}
-
-.header.complete-profile{
-  justify-content: center;
 }
 
 .admin-button {
