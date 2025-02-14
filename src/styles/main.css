@@ -6,7 +6,8 @@
 @import "./utils/variables.css";
 
 .body-custom {
-  background-color: var(--surface-container);
+  /* background-color: var(--surface-container); */
+  min-height:100vh;
   padding: 2rem 1rem;
 }
 

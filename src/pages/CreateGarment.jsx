@@ -5,7 +5,6 @@ import axios from "axios";
 import MenuForm from "../components/menuForm";
 import CustomModal from "../components/CustomModal";
 import "../styles/pages/new-garment.css";
-import "../styles/main.css";
 
 const CreateGarment = () => {
   const navigate = useNavigate();

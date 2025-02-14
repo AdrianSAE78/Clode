@@ -5,10 +5,11 @@
 /* Importa variables y mixins */
 @import "./utils/variables.css";
 
-.body-custom {
+/* .body-custom {
   background-color: var(--surface-container);
+  min-height: 100vh;
   padding: 2rem 1rem;
-}
+} */
 
 .navbar {
     border-radius: 1rem;
