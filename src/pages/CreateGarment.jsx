@@ -120,7 +120,7 @@ const CreateGarment = () => {
     formData.append("size", size);
     formData.append("condition", estado);
     formData.append("brand", "Sin Marca");
-    formData.append("categoryId", categorie); // Se envía el ID de la categoría seleccionada
+    formData.append("garment_category", categorie); // Se envía el ID de la categoría seleccionada
 
     // Verificar si la imagen es un archivo antes de agregarla
     if (image instanceof File) {

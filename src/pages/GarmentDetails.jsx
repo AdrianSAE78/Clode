@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Layout from "./layout";
 import NavbarDetails from "../components/Navbars/NavbarDetails";
 import InterchangeNotice from "../components/InterchangeNotice";
 import Image from "../assets/products/more-details.png";
@@ -38,7 +37,7 @@ const GarmentDetails = () => {
 // }, []); 
 
   return (
-    <Layout>
+    <>
       <NavbarDetails />
 
       <Details
@@ -58,7 +57,7 @@ const GarmentDetails = () => {
         available={available}
         isFavorite={isFavorite}
       />
-    </Layout>
+    </>
   );
 };
 
