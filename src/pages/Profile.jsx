@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import Metrics from "../components/metrics";
 import "../styles/pages/profile.css";
 
-
 import photo from "../assets/profile.jpg";
 import zapatos from "../assets/products/calzado.jpg";
 
@@ -51,6 +50,11 @@ const Profile = () => {
         <button onClick={() => navigate("/create-garment")}
         className="add" to="/create-garment">
           + Agrega prendas para intercambiar
+        </button>
+
+        <button onClick={() => navigate("/complete-profile")}
+        className="update" to="/complete-profile">
+          Actualizar tu información y preferencias
         </button>
       </div>
 
