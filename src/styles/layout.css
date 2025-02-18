@@ -11,17 +11,24 @@
   padding: 2rem 1rem;
 } */
 
+.content {
+  flex: 1;
+}
+
 .navbar {
-    border-radius: 1rem;
+  border-radius: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 3.25rem;
   background-color: var(--primary);
+  z-index: 3;
 
   ul {
-    list-style: none; /* Quita los estilos predeterminados de las viñetas */
-    margin: 0; /* Elimina el margen predeterminado */
+    list-style: none;
+    /* Quita los estilos predeterminados de las viñetas */
+    margin: 0;
+    /* Elimina el margen predeterminado */
     padding: 0 2rem;
     width: 100%;
 
@@ -36,8 +43,18 @@
 
     .icon {
       background-color: transparent;
-      border:none;
+      border: none;
       width: 3rem;
+
+      img {
+        width: 100%;
+      }
+    }
+    .icon-exit {
+      background-color: transparent;
+      border: none;
+      width: 2.6rem;
+      
       img {
         width: 100%;
       }

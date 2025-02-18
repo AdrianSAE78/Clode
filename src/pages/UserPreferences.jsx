@@ -1,3 +1,4 @@
+import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -16,6 +17,8 @@ dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
 
 const UserPreferences = () => {
+  const { user } = useAuth();
+  
   const navigate = useNavigate();
   // Estados para el modal
   const [modalOpen, setModalOpen] = useState(false);
@@ -52,6 +55,11 @@ const UserPreferences = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+
+    if (!user || !user.id) {
+      console.error("Usuario no autenticado o sin id");
+      return;
+    }
 
     let errorMessages = [];
 
@@ -99,6 +107,7 @@ const UserPreferences = () => {
         prefered_size: preferedSize,
         prefered_size_shoes: preferedSizeShoes,
         prefered_style: [...preferedStyle],
+        userId: user.id,
       });
 
       setModalTitle("Éxito");
@@ -109,11 +118,12 @@ const UserPreferences = () => {
       setModalTitle("Error");
       setModalMessage(
         "Error al guardar: " +
-          (error.response?.data?.error || "Error desconocido")
+        (error.response?.data?.error || "Error desconocido")
       );
       setModalOpen(true);
     }
   };
+  
   useEffect(() => {
     const getCategories = async () => {
       try {

@@ -28,7 +28,7 @@ const ImposibleInterchange = ({ seller }) => {
             Puedes enviar una solicitud de intercambio
           </span>{" "}
           siempre que estés dispuesto a elegir uno de los horarios disponibles
-          de Adrián. Esto no garantiza un intercambio, solo facilita la
+          de {seller}. Esto no garantiza un intercambio, solo facilita la
           asignación automática.
         </p>
         <p>

@@ -75,7 +75,7 @@ const Catalog = () => {
               image={`http://localhost:3000/uploads/${item.garment_image}`}
               icon={categoryInfo.icon} 
               categorieName={categoryInfo.name} 
-              itemDescription={item.description}
+              itemDescription={item.title}
             />
           );
         })

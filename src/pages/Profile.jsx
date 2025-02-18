@@ -1,13 +1,41 @@
+import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Metrics from "../components/metrics";
 import "../styles/pages/profile.css";
-
-import photo from "../assets/profile.jpg";
-import zapatos from "../assets/products/calzado.jpg";
-
+import NextExchangeSection from "../components/NextExchange";
 
 const Profile = () => {
+  const { user } = useAuth();
+
   const navigate = useNavigate();
+
+  const metrics = [
+    {
+      name: "agua",
+      number: user.literCounter,
+      unidad: (user.literCounter === 0) ? 'litros': 'mil litros',
+      estado: "Ahorrados",
+      icon: "/icons/water.png",
+      active: false,
+    },
+    {
+      name: "recive",
+      number: 5,
+      unidad: "prendas",
+      estado: "Recibidas",
+      icon: "/icons/cicle.png",
+      active: true,
+    },
+    {
+      name: "publish",
+      number: 10,
+      unidad: "prendas",
+      estado: "Publicadas",
+      icon: "/icons/shirt.png",
+      active: false,
+    },
+  ];
+  
   return (
     <>
       <h1>Mi perfil</h1>
@@ -15,19 +43,19 @@ const Profile = () => {
       <div className="card">
         {/* Profile img */}
         <div className="profile-picture">
-          <img src={photo} />
+          <img src={user.profilePicture} />
         </div>
         {/* identification info */}
         <div className="personal-info">
           {/* user name and nickname */}
-          <p className="headline-medium bold">Ariel Umatambo</p>
-          <p className="body-large">@arielU</p>
+          <p className="headline-medium bold">{user.username}</p>
+          <p className="body-large">@{user.username}</p>
           {/* score */}
           <div className="score">
             <div className="icon">
               <img src="/icons/star.png" />
             </div>
-            <p className="body-medium">4.5</p>
+            <p className="body-medium">{user.trustScore}</p>
           </div>
         </div>
 
@@ -58,57 +86,9 @@ const Profile = () => {
         </button>
       </div>
 
-      <section>
-        <div className="next-appoiment">
-          <h2 className="headline-small">
-            Intercambios <span className="body-large">próximos</span>
-          </h2>
-          <div className="details">
-            {/* img de proximo intercambio */}
-            <div className="next-app-img">
-              <img src={zapatos} alt="Image del siguiente intercambio" />
-            </div>
-            {/* Contenedor de información de cita */}
-            <div className="body-large text">
-              {/* fecha */}
-              <p>Lunes 07 de enero, 2024</p>
-              {/* ubicación estática */}
-              <p className="place">Patio central -PUCE</p>
-              {/* Hora disponible */}
-              <p>12:00</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <NextExchangeSection />
     </>
   );
 };
 
 export default Profile;
-
-const metrics = [
-  {
-    name: "agua",
-    number: 2.5,
-    unidad: "mil litros",
-    estado: "Ahorrados",
-    icon: "/icons/water.png",
-    active: false,
-  },
-  {
-    name: "recive",
-    number: 5,
-    unidad: "prendas",
-    estado: "Recibidas",
-    icon: "/icons/cicle.png",
-    active: true,
-  },
-  {
-    name: "publish",
-    number: 10,
-    unidad: "prendas",
-    estado: "Publicadas",
-    icon: "/icons/shirt.png",
-    active: false,
-  },
-];

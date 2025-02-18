@@ -1,0 +1,118 @@
+/* selectGarmentModal.css */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(var(--scrim), 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: var(--surface-container-lowest);
+  padding: 2rem;
+  border-radius: 1.5rem;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 12px rgba(var(--shadow), 0.1);
+}
+
+.modal-content h2 {
+  color: var(--on-surface);
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.garment-modal-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));;
+  grid-template-rows: auto;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  place-content: center;
+  padding: 0;
+}
+
+.garment-modal-list li {
+  background-color: var(--surface-container-high);
+  border-radius: 1rem;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  list-style: none;
+}
+
+.garment-modal-list li:hover {
+  background-color: var(--primary-container);
+  transform: translateY(-2px);
+}
+
+.garment-modal-list img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.garment-modal-list p {
+  color: var(--on-surface);
+  font-size: 0.875rem;
+  text-align: center;
+  margin: 0;
+}
+
+.close-modal {
+  display: block;
+  width: fit-content;
+  padding: 1rem;
+  background-color: var(--primary);
+  color: var(--on-primary);
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-self: center;
+}
+
+.close-modal:hover {
+  background-color: var(--primary-fixed-dim);
+}
+
+/* Loading state */
+.modal-content > div {
+  text-align: center;
+  color: var(--on-surface-variant);
+  padding: 2rem 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .garment-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .modal-content {
+    padding: 1.5rem;
+    width: 95%;
+  }
+}
+
+@media (max-width: 480px) {
+  .garment-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .garment-list img {
+    height: 150px;
+  }
+}

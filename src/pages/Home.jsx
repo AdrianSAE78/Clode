@@ -2,21 +2,23 @@ import { Box } from "@mui/material";
 import CircleLabels from "../components/circleLabels";
 import Catalog from "../components/catalog";
 import "../styles/main.css";
-import zapatos from "../assets/products/calzado.jpg";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-
+import { useAuth } from '../context/AuthContext';
+import NextExchangeSection from "../components/NextExchange";
 
 const Home = () => {
+  const {user} = useAuth();
   const navigate = useNavigate();
   const categories = CategoriesList();
+  
   if (!Array.isArray(categories)) {
     return <div>Cargando categorías...</div>;
   }
   return (
     <>
       <div className="header">
-        <h1 className="display-large">InterMod </h1>
+        <h1 className="display-large">Clode </h1>
         <div className="icon-bag">
           <img src="/icons/bag.png" alt="Liked bag" />
         </div>  
@@ -40,28 +42,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section>
-        <div className="next-appoiment">
-          <h2 className="headline-small">
-            Intercambios <span className="body-large">próximos</span>
-          </h2>
-          <div className="details">
-            {/* img de proximo intercambio */}
-            <div className="next-app-img">
-              <img src={zapatos} alt="Image del siguiente intercambio" />
-            </div>
-            {/* Contenedor de información de cita */}
-            <div className="body-large text">
-              {/* fecha */}
-              <p>Lunes 07 de enero, 2024</p>
-              {/* ubicación estática */}
-              <p className="place">Patio central -PUCE</p>
-              {/* Hora disponible */}
-              <p>12:00</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <NextExchangeSection />
 
       <section>
         {/* Categorie filter */}
@@ -139,63 +120,3 @@ const CategoriesList = () => {
 
   return (categories);
 };
-
-// const getCategories = async () => {
-//   try {
-//     const response = await fetch(
-//       "http://localhost:3000/api/categories/"
-//     );
-//     const categories = await response.json();
-//     return categories
-//   } catch (error) {
-//     console.error("Error fetching categories:", error);
-//   }
-// };
-
-// const categories = [
-//   {
-//     label: "Mujer",
-//     image: "/categories/women.jpg",
-//   },
-//   {
-//     label: "Hombre",
-//     image: "/categories/hombre.jpg",
-//   },
-//   {
-//     label: "Invierno",
-//     image: "/categories/invierno.jpg",
-//   },
-//   {
-//     label: "Verano",
-//     image: "/categories/verano.jpg",
-//   },
-//   {
-//     label: "Urbano",
-//     image: "/categories/urbano.jpg",
-//   },
-//   {
-//     label: "Rock",
-//     image: "/categories/rock.jpg",
-//   },
-//   {
-//     label: "Vintage",
-//     image: "/categories/vintage.jpg",
-//   },
-//   {
-//     label: "Étnico",
-//     image: "/categories/etnico.jpg",
-//   },
-//   {
-//     label: "Bussines",
-//     image: "/categories/bussines.jpg",
-//   },
-//   {
-//     label: "Casual",
-//     image: "/categories/casual.jpg",
-//   },
-//   {
-//     label: "Deportivo",
-//     image: "/categories/sport.jpg",
-//   },
-// ];
-

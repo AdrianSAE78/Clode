@@ -8,11 +8,12 @@ import { GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_SECRET_KEY,
-  authDomain: "intermod-45362.firebaseapp.com",
-  projectId: "intermod-45362",
-  storageBucket: "intermod-45362.firebasestorage.app",
-  messagingSenderId: "1031113295957",
-  appId: "1:1031113295957:web:974ed4254ff22792326cdc"
+  authDomain: "intermod-f3902.firebaseapp.com",
+  projectId: "intermod-f3902",
+  storageBucket: "intermod-f3902.firebasestorage.app",
+  messagingSenderId: "38796577406",
+  appId: "1:38796577406:web:08aac12df725963e54e62f",
+  measurementId: "G-2KQQV8XKKL"
 };
 
 // Initialize Firebase

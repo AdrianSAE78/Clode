@@ -18,7 +18,7 @@ const Details = ({dateAvailable, image, name, size, condition }) => {
       <div>
         {/* img content */}
         {/* Deberia venir desde la llamada fetch */}
-        <div>
+        <div className="img-details">
           <img src={image} />
         </div>
 
@@ -34,7 +34,7 @@ const Details = ({dateAvailable, image, name, size, condition }) => {
         <div className="flex-between body-large details">
           <p>
             {" "}
-            <span className="bold">Talla:</span> {size.toUpperCase()} - {sizeText}
+            <span className="bold">Talla:</span> {size.toUpperCase()}
           </p>
           <p>
             <span className="bold">Estado:</span> {condition}

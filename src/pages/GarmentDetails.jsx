@@ -1,61 +1,80 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useAuth } from "../context/AuthContext";
 import NavbarDetails from "../components/Navbars/NavbarDetails";
 import InterchangeNotice from "../components/InterchangeNotice";
-import Image from "../assets/products/more-details.png";
+import Details from "../components/Details";
 import "../styles/pages/garment-details.css";
 import "../styles/utils/reusable-functions.css";
-import Details from "../components/Details";
-
-const date = new Date();
-
-const garmentStatic={
-  garment_image:Image,
-  upload_date:date,
-  title:"Blusa con tejidos",
-  size:"xl",
-  condition:"Un solo uso"
-}
 
 const GarmentDetails = () => {
+  const { id } = useParams();
+  const { user } = useAuth();
   const [available, setAvailable] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [seller, setSeller] = useState("Adrian B.");
-  const [garment, setGarment] = useState(garmentStatic)
+  const [seller, setSeller] = useState("");
+  const [garment, setGarment] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-//   useEffect(() => {
-//     const fetchData = async () => {
-//         try {
-//             const response = await fetch("https://api.example.com/data/{id}"); // URL de la API
-//             const result = await response.json();
-//             setGarment(result); 
-//         } catch (error) {
-//             console.error("Error fetching data:", error);
-//         }
-//     };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/api/garments/${id}`, {
+          headers: {
+            Authorization: `Bearer ${user?.accessToken}`
+          }
+        });
+        console.log("Datos de la prenda:", response.data.garment);
+        setAvailable(response.data.match_hours);
+        console.log(available)
+        setGarment(response.data.garment);
+        setSeller(response.data.garment.user_garments?.username || "Vendedor desconocido");
+        
+      } catch (error) {
+        console.error("Error cargando prenda:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-//     fetchData();
-// }, []); 
+    fetchData();
+  }, [id, user?.token]);
+
+  const handleToggleFavorite = async () => {
+    try {
+      await axios.post(`http://localhost:3000/api/favorites`, {
+        userId: user.id,
+        garmentId: id
+      });
+      setIsFavorite(!isFavorite);
+    } catch (error) {
+      console.error("Error actualizando favoritos:", error);
+    }
+  };
+
+  if (loading) return <div>Cargando detalles de la prenda...</div>;
+  if (!garment) return <div>Prenda no encontrada</div>;
 
   return (
     <>
       <NavbarDetails />
 
       <Details
-        image={garment.garment_image}
-        dateAvailable={garment.upload_date}
+        image={`http://localhost:3000/uploads/${garment.garment_image}`}
+        dateAvailable={new Date(garment.upload_date).toLocaleDateString()}
         name={garment.title}
-        size={garment.size}
+        size={garment.size.toUpperCase()}
         condition={garment.condition}
       />
-
-      {/* Section for notice */}
-      {/* A este componente se le pasa el estado de favorito   */}
-      {/* También setea un artículo como favorito. Esto implica que de ser el caso, toma el id del producto y lo mande como fetch al back para guardarlo en la lista  */}
 
       <InterchangeNotice
         seller={seller}
         available={available}
         isFavorite={isFavorite}
+        receivedGarmentId={garment.id}
+        sellerId={garment.user_garments?.id}
+        onToggleFavorite={handleToggleFavorite}
       />
     </>
   );

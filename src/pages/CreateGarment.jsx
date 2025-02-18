@@ -1,3 +1,4 @@
+import { useAuth } from "../context/AuthContext";
 import { Box, TextField } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +8,8 @@ import CustomModal from "../components/CustomModal";
 import "../styles/pages/new-garment.css";
 
 const CreateGarment = () => {
+  const { user } = useAuth();
+
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
 
@@ -16,6 +19,7 @@ const CreateGarment = () => {
   const [size, setSize] = useState("");
   const [categorie, setCategorie] = useState("");
   const [estado, setEstado] = useState("");
+  const [userId, setUserId] = useState();
 
   // Estados para el modal
   const [modalOpen, setModalOpen] = useState(false);
@@ -35,8 +39,21 @@ const CreateGarment = () => {
       }
     };
 
+    const getUserInfo = async () => {
+      if (user?.firebase_uid) {
+        try {
+          const response = await axios.get(`http://localhost:3000/api/users/${user.firebase_uid}`);
+          const data = response.data;
+          console.log(data)
+          setUserId(data.id)
+        } catch (error) {
+          console.log("No se encontraron preferencias previas", error);
+        }
+      }
+    };
+    getUserInfo();
     fetchCategories();
-  }, []);
+  }, [user]);
 
   // Función para manejar cambios en los inputs
   const handleInputChange = (setState) => (e) => {
@@ -103,6 +120,11 @@ const CreateGarment = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
 
+    if (!userId) {
+      console.error("Usuario no autenticado o sin id");
+      return;
+    }
+
     // Validación de campos obligatorios
     if (!name || !size || !categorie || !estado || !image) {
       setModalTitle("Error");
@@ -120,8 +142,9 @@ const CreateGarment = () => {
     formData.append("size", size);
     formData.append("condition", estado);
     formData.append("brand", "Sin Marca");
-    formData.append("garment_category", categorie); // Se envía el ID de la categoría seleccionada
-
+    formData.append("categoryId", categorie);
+    formData.append("userId", user.id);
+    console.log(formData);
     // Verificar si la imagen es un archivo antes de agregarla
     if (image instanceof File) {
       formData.append("garment_image", image);
@@ -132,7 +155,7 @@ const CreateGarment = () => {
       return;
     }
 
-    // Envio
+    //Envio
     try {
       await axios.post(
         "http://localhost:3000/api/garments",

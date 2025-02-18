@@ -9,6 +9,7 @@ const Login = () => {
     if (user) {
         return <Navigate to="/"/>
     }
+
   return (
     <div className="body-custom">
       <div>
